@@ -24,14 +24,6 @@
             </RadioButton>
             <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Total Quantity of Reflectors" fx:id="LQuantityReflectors"/>
             <Spinner GridPane.columnIndex="1" GridPane.rowIndex="6" min="1" max="4" initialValue="2" editable="true" fx:id="SReflectors"/>
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="7" text="Rotation of rotors" fx:id="LRotationRotors"/>
-            <!--<TextField GridPane.columnIndex="1" GridPane.rowIndex="7" promptText="Laps (L) and Keystrokes (K) are typed before the quantity, separated by a hyphen" fx:id="TFRotationConfiguration"/>-->
-            <Button GridPane.columnIndex="1" GridPane.rowIndex="7" text="configure" fx:id="BConfigureRotation" onAction="#handleBConfigurationRotation"/>
-            <RadioButton GridPane.columnIndex="0" GridPane.rowIndex="8" text="Configure later (rotation)" fx:id="RBConfigureLater" onAction="#handleRBConfigureLater">
-                <tooltip>
-                    <Tooltip text="Button Up: Configure the machine rotation later; Button Down: configure the machine now"/>
-                </tooltip>
-            </RadioButton>
         </GridPane>
     </content>
 </DialogPane>
