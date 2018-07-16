@@ -1,0 +1,51 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:controller="com.miguelsanchez.Controller"
+            xmlns:fx="http://javafx.com/fxml" fx:id="mainBorderPane">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="New" onAction="#createANewMachine"/>
+                <MenuItem text="Import"/>
+                <MenuItem text="Load"/>
+                <MenuItem text="Save"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Settings"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Quit"/>
+            </Menu>
+            <Menu text="Configuration">
+                <Menu text="Rotors">
+                    <MenuItem text="Change the position"/>
+                    <MenuItem text="Change to another one"/>
+                    <MenuItem text="Modify the wiring"/>
+                    <MenuItem text="Details"/>
+                </Menu>
+                <Menu text="Reflector">
+                    <MenuItem text="Change to another one"/>
+                    <MenuItem text="Modify the wiring"/>
+                    <MenuItem text="Details"/>
+                </Menu>
+                <Menu text="PlugBoard">
+                    <MenuItem text="Change the wiring"/>
+                    <MenuItem text="Details"/>
+                </Menu>
+                <MenuItem text="Create a new starting positions sheet"/>
+            </Menu>
+            <Menu text="Machine">
+                <MenuItem text="Add a new rotor"/>
+                <MenuItem text="Add a new reflector"/>
+                <MenuItem text="Change the quantity of components in the working machine"/>
+            </Menu>
+            <Menu text="Operation">
+                <MenuItem text="Starting positions sheet"/>
+                <MenuItem text="Encrypt/Decrypt"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Calculate the possible encodings"/>
+            </Menu>
+            <Menu text="Others">
+                <MenuItem text="Help"/>
+            </Menu>
+        </MenuBar>
+    </top>
+</BorderPane>

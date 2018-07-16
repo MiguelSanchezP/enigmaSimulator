@@ -1,0 +1,37 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.miguelsanchez.NewMachineController" fx:id="newMachinePane">
+    <content>
+        <GridPane vgap="15">
+            <Label text="Name of the machine: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Write the name of the new machine here" fx:id="TFName"/>
+            <Label text="Description: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextArea GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Write the description of the machine here" wrapText="true" fx:id="TADescription"/>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3" text="Total quantity of rotors: "/>
+            <Spinner GridPane.columnIndex="1" GridPane.rowIndex="3" min="1" max="10" editable="true" initialValue="5" fx:id="SRotors"/>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="4" text="Quantity of rotors operating: "/>
+            <Spinner GridPane.columnIndex="1" GridPane.rowIndex="4" min="1" max="10" editable="true" initialValue="3" fx:id="SOperatingRotors"/>
+            <RadioButton text="Reflector" GridPane.columnIndex="0" GridPane.rowIndex="5" selected="true" fx:id="RBReflector" onAction="#handleRBReflector">
+                <tooltip>
+                    <Tooltip text="Button Up: there is a reflector present; Button Down: there is no reflector"/>
+                </tooltip>
+            </RadioButton>
+            <RadioButton text="Plugboard" GridPane.columnIndex="1" GridPane.rowIndex="5" selected="true" fx:id="RBPlugboard">
+                <tooltip>
+                    <Tooltip text="Button Up: there is a plugboard present; Button Down: there is no plugboard"/>
+                </tooltip>
+            </RadioButton>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Total Quantity of Reflectors" fx:id="LQuantityReflectors"/>
+            <Spinner GridPane.columnIndex="1" GridPane.rowIndex="6" min="1" max="4" initialValue="2" editable="true" fx:id="SReflectors"/>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="7" text="Rotation of rotors" fx:id="LRotationRotors"/>
+            <!--<TextField GridPane.columnIndex="1" GridPane.rowIndex="7" promptText="Laps (L) and Keystrokes (K) are typed before the quantity, separated by a hyphen" fx:id="TFRotationConfiguration"/>-->
+            <Button GridPane.columnIndex="1" GridPane.rowIndex="7" text="configure" fx:id="BConfigureRotation" onAction="#handleBConfigurationRotation"/>
+            <RadioButton GridPane.columnIndex="0" GridPane.rowIndex="8" text="Configure later (rotation)" fx:id="RBConfigureLater" onAction="#handleRBConfigureLater">
+                <tooltip>
+                    <Tooltip text="Button Up: Configure the machine rotation later; Button Down: configure the machine now"/>
+                </tooltip>
+            </RadioButton>
+        </GridPane>
+    </content>
+</DialogPane>
