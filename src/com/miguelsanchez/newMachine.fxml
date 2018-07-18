@@ -1,7 +1,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <DialogPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.miguelsanchez.NewMachineController" fx:id="newMachinePane">
+            fx:controller="com.miguelsanchez.NewMachineController">
     <content>
         <GridPane vgap="15">
             <Label text="Name of the machine: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
@@ -19,7 +20,7 @@
             </RadioButton>
             <RadioButton text="Plugboard" GridPane.columnIndex="1" GridPane.rowIndex="5" selected="true" fx:id="RBPlugboard">
                 <tooltip>
-                    <Tooltip text="Button Up: there is a plugboard present; Button Down: there is no plugboard"/>
+                    <Tooltip text="Button Up: there is a plugboard present; Button Down: there is no plugboard on the machine"/>
                 </tooltip>
             </RadioButton>
             <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Total Quantity of Reflectors" fx:id="LQuantityReflectors"/>

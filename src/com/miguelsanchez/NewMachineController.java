@@ -33,30 +33,28 @@ public class NewMachineController {
 
     @FXML
     public void handleRBReflector() {
-        if (RBReflector.isSelected()) {
-            SReflectors.setDisable(false);
-            LQuantityReflectors.setDisable(false);
-        } else {
-            SReflectors.setDisable(true);
-            LQuantityReflectors.setDisable(true);
-        }
+        setReflectorsPosition(RBReflector.isSelected());
     }
 
     void setMachine(Machine machine) {
         TFName.setText(machine.getName());
         TADescription.setText(machine.getDescription());
         RBReflector.setSelected(machine.isReflectorPresent());
-        RBPlugboard.setSelected(machine.isPlugboardPresent());
+        RBPlugboard.setSelected(machine.isBidirectionalEncryption());
         int value = machine.getTotalRotors() - (int) SRotors.getValue();
         SRotors.increment(value);
         value = machine.getTotalReflectors() - (int) SReflectors.getValue();
         SReflectors.increment(value);
         value = machine.getOperatingRotors() - (int) SOperatingRotors.getValue();
         SOperatingRotors.increment(value);
-        if (RBReflector.isSelected()) {
+        setReflectorsPosition(RBReflector.isSelected());
+    }
+
+    private void setReflectorsPosition (boolean t) {
+        if (t) {
             SReflectors.setDisable(false);
             LQuantityReflectors.setDisable(false);
-        } else {
+        }else{
             SReflectors.setDisable(true);
             LQuantityReflectors.setDisable(true);
         }

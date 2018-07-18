@@ -143,7 +143,13 @@ public class Controller {
                 }
             }
         }
-        System.out.println(tempRotors.size());
+        //continue with the other menus in the following order:
+        //1.-Plugboard
+        //2.-Rotation Configuration
+        //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
+        //4.-Reflectors
+        //finish the machine
+
     }
 
     private Optional<ButtonType> emptyFieldsAlert () {
