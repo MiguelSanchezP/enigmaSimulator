@@ -44,7 +44,7 @@ public class Controller {
                 NewMachineController controller = fxmlLoader.getController();
                 tempMachine = controller.getResults();
                 isCancel = false;
-                if (tempMachine.getName().isEmpty() || tempMachine.getDescription().isEmpty() || (tempMachine.getRotationConfiguration().isEmpty() && !tempMachine.isConfigureLater())) {
+                if (tempMachine.getName().isEmpty() || tempMachine.getDescription().isEmpty()) {
                     Optional<ButtonType> result2 = emptyFieldsAlert();
                     if (result2.isPresent() && result2.get() == ButtonType.CANCEL) {
                         isCancel = true;
@@ -69,6 +69,24 @@ public class Controller {
                 }
             }
         }
+        //continue with the other menus in the following order:
+        //on the new machine add the temporal names?
+        //1.-Plugboard
+        //2.-Rotation Configuration
+        //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
+        //4.-Reflectors
+        //finish the machine
+        Dialog<ButtonType> plugConfigDialog = new Dialog<>();
+        FXMLLoader fxmlLoader2 = new FXMLLoader();
+        fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
+        try {
+            plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+        Optional<ButtonType> wait = plugConfigDialog.showAndWait();
+
         LinkedList<Rotor> tempRotors = new LinkedList<>();
         int currentRotor = 0;
 
@@ -143,12 +161,6 @@ public class Controller {
                 }
             }
         }
-        //continue with the other menus in the following order:
-        //1.-Plugboard
-        //2.-Rotation Configuration
-        //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
-        //4.-Reflectors
-        //finish the machine
 
     }
 
