@@ -8,10 +8,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Optional;
+
+import static com.miguelsanchez.auxiliars.AllLettersPaneController.getAllLettersPane;
 
 public class Controller {
 
@@ -76,17 +79,22 @@ public class Controller {
         //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
         //4.-Reflectors
         //finish the machine
-        Dialog<ButtonType> plugConfigDialog = new Dialog<>();
-        FXMLLoader fxmlLoader2 = new FXMLLoader();
-        fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
-        try {
-            plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
-        }catch (IOException e) {
-            e.printStackTrace();
+        boolean plugCancel = true;
+        while (plugCancel) {
+            Dialog<ButtonType> plugConfigDialog = new Dialog<>();
+            FXMLLoader fxmlLoader2 = new FXMLLoader();
+            fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
+            try {
+                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+                plugCancel = false;
+            }
+            NewPlugboardController controller3 = new NewPlugboardController();
+            controller3.addAllLetters();
+            plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            Optional<ButtonType> wait = plugConfigDialog.showAndWait();
         }
-        plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        Optional<ButtonType> wait = plugConfigDialog.showAndWait();
-
         LinkedList<Rotor> tempRotors = new LinkedList<>();
         int currentRotor = 0;
 
