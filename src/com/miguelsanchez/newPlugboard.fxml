@@ -15,7 +15,7 @@
                     <Tooltip text="Button Up: the wire goes from A to B and from B to A; Button Down: the wire only goes from A to B"/>
                 </tooltip>
             </RadioButton>
-            <!--<GridPane GridPane.columnIndex="0" GridPane.rowIndex="1"/>-->
+            <GridPane GridPane.columnIndex="0" GridPane.rowIndex="1"/>
             <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <tooltip>
                     <Tooltip text="Button Up: Configure the plugboard later; Button Down: Configure the plugboard now"/>
