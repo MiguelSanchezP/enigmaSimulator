@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -89,7 +88,7 @@ public class Controller {
                 plugCancel = false;
             }
             NewPlugboardController controller3 = new NewPlugboardController();
-            controller3.addAllLetters();
+            //try to do with a new method
             plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
             Optional<ButtonType> wait = plugConfigDialog.showAndWait();
         }
