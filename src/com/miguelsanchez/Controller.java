@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import static com.miguelsanchez.NewPlugboardController.configureTheGridPane;
+import static com.miguelsanchez.auxiliars.AllLettersPane.getAllLettersPane;
+
 public class Controller {
 
     @FXML
@@ -81,17 +84,20 @@ public class Controller {
             Dialog<ButtonType> plugConfigDialog = new Dialog<>();
             FXMLLoader fxmlLoader2 = new FXMLLoader();
             fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
-            try {
-                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
-            } catch (IOException e) {
-                e.printStackTrace();
-                plugCancel = false;
-            }
+//            try {
+//                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+                plugConfigDialog.getDialogPane().setContent(configureTheGridPane());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                plugCancel = false;
+//            }
             NewPlugboardController controller3 = new NewPlugboardController();
             //try to do with a new method
             plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
             Optional<ButtonType> wait = plugConfigDialog.showAndWait();
         }
+
+        //STARTING OF THE ROTORS
         LinkedList<Rotor> tempRotors = new LinkedList<>();
         int currentRotor = 0;
 

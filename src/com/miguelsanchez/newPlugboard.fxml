@@ -16,7 +16,7 @@
                 </tooltip>
             </RadioButton>
             <!--<GridPane GridPane.columnIndex="0" GridPane.rowIndex="1"/>-->
-            <RadioButton text="ConfigureLater" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <tooltip>
                     <Tooltip text="Button Up: Configure the plugboard later; Button Down: Configure the plugboard now"/>
                 </tooltip>
