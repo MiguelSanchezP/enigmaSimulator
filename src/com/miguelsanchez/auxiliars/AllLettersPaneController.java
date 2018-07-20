@@ -7,7 +7,7 @@ public class AllLettersPaneController {
     @FXML
     private GridPane AllLettersPane;
 
-    public void setOnGridPane (GridPane gp, int c, int r) {
-        gp.add(AllLettersPane, c, r);
+    public GridPane getAllLettersPane () {
+        return AllLettersPane;
     }
 }

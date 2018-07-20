@@ -5,8 +5,8 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-            vgap="15" hgap="15" fx:id="AllLettersPane"
-            fx:controller="com.miguelsanchez.auxiliars.AllLettersPaneController">
+            vgap="15" hgap="15"
+            fx:controller="com.miguelsanchez.auxiliars.AllLettersPaneController" fx:id="AllLettersPane">
     <Label text="A:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
     <TextField promptText="A" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="30"/>
     <Label text="B:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>

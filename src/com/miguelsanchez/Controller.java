@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Optional;
 
-import static com.miguelsanchez.auxiliars.AllLettersPaneController.getAllLettersPane;
-
 public class Controller {
 
     @FXML
