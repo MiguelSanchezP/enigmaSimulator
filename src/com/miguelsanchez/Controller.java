@@ -76,22 +76,21 @@ public class Controller {
         //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
         //4.-Reflectors
         //finish the machine
+
         boolean plugCancel = true;
         while (plugCancel) {
             Dialog<ButtonType> plugConfigDialog = new Dialog<>();
             FXMLLoader fxmlLoader2 = new FXMLLoader();
             fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
             try {
-//              plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
-                NewPlugboardController controller2 = new NewPlugboardController();
+              plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+                NewPlugboardController controller2 = fxmlLoader2.getController();
                 controller2.configureTheGridPane();
-                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+//                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
             } catch (IOException e) {
                 e.printStackTrace();
                 plugCancel = false;
             }
-            NewPlugboardController controller3 = new NewPlugboardController();
-            //try to do with a new method
             plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
             Optional<ButtonType> wait = plugConfigDialog.showAndWait();
         }
