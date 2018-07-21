@@ -83,7 +83,7 @@ public class Controller {
             FXMLLoader fxmlLoader2 = new FXMLLoader();
             fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
             try {
-              plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
                 NewPlugboardController controller2 = fxmlLoader2.getController();
                 controller2.configureTheGridPane();
 //                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
