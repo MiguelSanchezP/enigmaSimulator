@@ -16,7 +16,7 @@ public class AllLettersPane {
         int round = 0;
         while (!finish) {
             for (int c = 0; c < 10; c++) {
-                String text = numberToLetter [((r*10+c)/2)];
+                String text = numberToLetter [round];
                 if (oddRound) {
                     text += ":";
                     Label tempL = new Label();
@@ -31,13 +31,15 @@ public class AllLettersPane {
                     oddRound = true;
                     round++;
                 }
-                if (round == (numberToLetter.length*2)) {
+                if (round == numberToLetter.length) {
                     finish = true;
                     break;
                 }
             }
             r++;
         }
+        allLettersPane.setVgap(10.0);
+        allLettersPane.setHgap(10.0);
         return allLettersPane;
     }
 

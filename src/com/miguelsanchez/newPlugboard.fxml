@@ -9,13 +9,13 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.miguelsanchez.NewPlugboardController">
     <content>
-        <GridPane fx:id="PlugConfigurationPane">
-            <RadioButton text="Double direction wire" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true" fx:id="RBDoubleDirection">
+        <GridPane vgap="15" hgap="15" fx:id="PlugConfigurationPane">
+            <RadioButton text="Double direction wire" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true">
                 <tooltip>
                     <Tooltip text="Button Up: the wire goes from A to B and from B to A; Button Down: the wire only goes from A to B"/>
                 </tooltip>
             </RadioButton>
-            <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="RBConfigureLater">
+            <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <tooltip>
                     <Tooltip text="Button Up: Configure the plugboard later; Button Down: Configure the plugboard now"/>
                 </tooltip>
