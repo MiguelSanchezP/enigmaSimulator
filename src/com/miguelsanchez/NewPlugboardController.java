@@ -1,14 +1,13 @@
 package com.miguelsanchez;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
-import javafx.event.EventHandler;
-
-import static com.miguelsanchez.auxiliars.AllLettersPane.getAllLettersPane;
-import static com.miguelsanchez.auxiliars.AllLettersPane.proccessKey;
+import static com.miguelsanchez.auxiliars.AllLettersPane.*;
+import static com.miguelsanchez.auxiliars.Alphabet.getAlphabet;
 
 public class NewPlugboardController {
 
@@ -21,6 +20,7 @@ public class NewPlugboardController {
 
     void configureTheGridPane () {
         PlugConfigurationPane.add(getAllLettersPane(), 0, 1);
+        PlugConfigurationPane.getChildren().get(2).setOnKeyReleased(checkForTheLetter);
     }
 
     @FXML
@@ -39,15 +39,28 @@ public class NewPlugboardController {
         doubleWire = RBDoubleWire.isSelected();
     }
 
-    String t;
-    @FXML
-    private void handleKeyPressed () {
-        EventHandler keyEvent = new EventHandler <KeyEvent> () {
-            @Override
-            public void handle (KeyEvent event) {
-                t = event.getCharacter();
+    private EventHandler<KeyEvent> checkForTheLetter = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent event) {
+            String input = event.getText();
+            System.out.println("The input is " + input);
+            for (int i = 0; i<getAlphabet("Standard").getName().length(); i++) {
+                System.out.println("I HAVE STARTED!");
+                if (getAllTfs().get(i).getText().equals(input)) {
+                    System.out.println("IM EXECUTING!!!");
+                    String[] alphabetComponents = getAlphabet("Standard").getComponents();
+                    String plainLetter = alphabetComponents[i];
+                    int number = toNumber(input);
+                    getAllTfs().get(number).setText(plainLetter);
+                    updateLettersPane();
+                    update();
+                }
             }
-        };
-        proccessKey(doubleWire, PlugConfigurationPane, t);
+        }
+    };
+
+    private void update () {
+        PlugConfigurationPane.getChildren().remove(2);
+        PlugConfigurationPane.add(getAllLettersPane(), 0, 1);
     }
 }
