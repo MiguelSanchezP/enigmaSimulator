@@ -23,6 +23,12 @@ public class Alphabet {
     public static ArrayList<Alphabet> getAlphabets () {
         return alphabets;
     }
+    public static ArrayList<String> getAlphabetNames () {
+        ArrayList<String> allNames = new ArrayList<>();
+        for (int i : alphabets) {
+            allNames.add(alphabets.get(i).getName());
+        }
+    }
     public Alphabet getAlphabet (int i) {
         return alphabets.get(i);
     }

@@ -85,8 +85,7 @@ public class Controller {
             try {
                 plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
                 NewPlugboardController controller2 = fxmlLoader2.getController();
-                controller2.configureTheGridPane();
-//                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
+//                                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
             } catch (IOException e) {
                 e.printStackTrace();
                 plugCancel = false;

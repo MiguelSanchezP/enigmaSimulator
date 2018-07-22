@@ -1,8 +1,18 @@
 package com.miguelsanchez;
 
+import com.miguelsanchez.auxiliars.Alphabet;
 import com.miguelsanchez.components.Machine;
+import javafx.beans.InvalidationListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class NewMachineController {
     @FXML
@@ -15,6 +25,16 @@ public class NewMachineController {
     private TextField TFName;
     @FXML
     private TextArea TADescription;
+    @FXML
+    private ComboBox CBAlphabets;
+
+    public void initialize {
+        ObservableList<String> Alphabets = FXCollections.observableArrayList();
+        for (String n : Alphabet.getAlphabets().getName()) {
+
+        }
+    }
+
     Machine getResults() {
         String name = TFName.getText().trim();
         String description = TADescription.getText().trim();
