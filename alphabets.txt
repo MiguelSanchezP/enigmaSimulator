@@ -1,0 +1,2 @@
+Standard	A B C F
+Main	F D S W

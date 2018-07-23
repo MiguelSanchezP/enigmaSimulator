@@ -2,17 +2,8 @@ package com.miguelsanchez;
 
 import com.miguelsanchez.auxiliars.Alphabet;
 import com.miguelsanchez.components.Machine;
-import javafx.beans.InvalidationListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class NewMachineController {
     @FXML
@@ -27,12 +18,11 @@ public class NewMachineController {
     private TextArea TADescription;
     @FXML
     private ComboBox CBAlphabets;
+    @FXML
+    private RadioButton RBNewAlphabet;
 
-    public void initialize {
-        ObservableList<String> Alphabets = FXCollections.observableArrayList();
-        for (String n : Alphabet.getAlphabets().getName()) {
-
-        }
+    public void initialize () {
+        CBAlphabets.setItems(Alphabet.getAlphabetsOL());
     }
 
     Machine getResults() {
@@ -48,7 +38,8 @@ public class NewMachineController {
             totalReflectors = 0;
         }
         boolean plugboardPresent = RBPlugboard.isSelected();
-        return new Machine(name, description, reflectorPresent, totalRotors, operatingRotors, totalReflectors, plugboardPresent);
+        boolean newAlphabet = RBNewAlphabet.isSelected();
+        return new Machine(name, description, reflectorPresent, totalRotors, operatingRotors, totalReflectors, plugboardPresent, newAlphabet);
     }
 
     @FXML
@@ -78,5 +69,10 @@ public class NewMachineController {
             SReflectors.setDisable(true);
             LQuantityReflectors.setDisable(true);
         }
+    }
+
+    @FXML
+    private void handleRBNewAlphabet () {
+        CBAlphabets.setDisable(!RBNewAlphabet.isSelected());
     }
 }

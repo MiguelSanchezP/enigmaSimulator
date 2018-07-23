@@ -71,12 +71,21 @@ public class Controller {
         }
         //continue with the other menus in the following order:
         //on the new machine add the temporal names?
+        //0.- Alphabets
         //1.-Plugboard
         //2.-Rotation Configuration
         //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
         //4.-Reflectors
         //finish the machine
 
+        if (tempMachine.isNewAlphabet()) {
+            boolean newAlphabetCancel =true;
+            while (newAlphabetCancel) {
+                Dialog<ButtonType> alphabetDialog = new Dialog<>();
+            }
+        }
+
+        //STARTING OF THE PLUGBOARD
         boolean plugCancel = true;
         while (plugCancel) {
             Dialog<ButtonType> plugConfigDialog = new Dialog<>();

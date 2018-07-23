@@ -25,12 +25,12 @@
             </RadioButton>
             <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Total Quantity of Reflectors" fx:id="LQuantityReflectors"/>
             <Spinner GridPane.columnIndex="1" GridPane.rowIndex="6" min="1" max="4" initialValue="2" editable="true" fx:id="SReflectors"/>
-            <RadioButton GridPane.columnIndex="0" GridPane.rowIndex="7" text="New alphabet">
+            <RadioButton GridPane.columnIndex="0" GridPane.rowIndex="7" text="New alphabet" fx:id="RBNewAlphabet" onAction="#handleRBNewAlphabet">
                 <tooltip>
                     <Tooltip text="Button Up: Create a new alphabet and use it in this machine; Button Down: use an existing alphabet"/>
                 </tooltip>
             </RadioButton>
-            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="CBAlphabets"/>
+            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="CBAlphabets" promptText="Select"/>
         </GridPane>
     </content>
 </DialogPane>
