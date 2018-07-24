@@ -14,7 +14,10 @@ import java.util.Iterator;
 public class Alphabet {
     private String name;
     private String[] components;
+    private String tempComponents;
     private String regex;
+    private boolean defaultSeparation;
+    private boolean existingAlphabet;
     private static String filename = "./Files/alphabets.txt";
     private static ObservableList<Alphabet> alphabetsOL;
 
@@ -25,6 +28,21 @@ public class Alphabet {
     }
     private Alphabet (String name) {
         this.name = name;
+    }
+    public Alphabet () {
+        this.name = "";
+        this.tempComponents = "";
+        this.regex = "-";
+        defaultSeparation = true;
+        existingAlphabet = false;
+    }
+
+    public Alphabet (String name, String tempComponents, String regex, boolean defaultSeparation, boolean existingAlphabet) {
+        this.name = name;
+        this.tempComponents = tempComponents;
+        this.regex = regex;
+        this.defaultSeparation = defaultSeparation;
+        this.existingAlphabet = existingAlphabet;
     }
 
     public String getName () {
@@ -37,6 +55,18 @@ public class Alphabet {
 
     public String getRegex () {
         return regex;
+    }
+
+    public boolean isDefaultSeparation () {
+        return defaultSeparation;
+    }
+
+    public boolean isExistingAlphabet () {
+        return existingAlphabet;
+    }
+
+    public String getTempComponents () {
+        return tempComponents;
     }
 
     public static Alphabet getAlphabet (String name) {
@@ -56,6 +86,9 @@ public class Alphabet {
         for (String s : input) {
             sb.append(s);
             sb.append(regex);
+        }
+        if (sb.toString().isEmpty()) {
+            return "";
         }
         return sb.toString();
     }

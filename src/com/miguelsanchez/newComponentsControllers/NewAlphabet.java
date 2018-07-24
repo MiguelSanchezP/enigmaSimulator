@@ -26,6 +26,19 @@ public class NewAlphabet {
         alphabetsFill (CBExistingAlphabet);
     }
 
+    public void setAlphabet (Alphabet a) {
+        RBSeparation.setSelected(a.isDefaultSeparation());
+        TFSeparation.setText(a.getRegex());
+        RBExistingAlphabet.setSelected(a.isExistingAlphabet());
+        TFName.setText(a.getName());
+        TAAlphabet.setText(a.getTempComponents());
+        if (Alphabet.getAlphabetsOL().contains(a.getName())) {
+            CBExistingAlphabet.setValue(a.getName());
+        }
+        handleRBSeparation();
+        handleRBExistingAlphabet();
+    }
+
     @FXML
     private void handleRBSeparation () {
         TFSeparation.setDisable(RBSeparation.isSelected());
@@ -41,22 +54,23 @@ public class NewAlphabet {
     private void handleCBExistingAlphabet () {
         text=TAAlphabet.getText();
         Alphabet tempAlphabet = getAlphabet(CBExistingAlphabet.getValue());
-        TAAlphabet.setText(Alphabet.toString(tempAlphabet.getComponents(), tempAlphabet.getRegex()));
+        TAAlphabet.setText(tempAlphabet.getTempComponents());
         RBSeparation.setSelected(tempAlphabet.getRegex().equals("-"));
         TFSeparation.setText(tempAlphabet.getRegex());
         handleRBSeparation();
-//        }
     }
 
     public Alphabet getResults () {
         String regex;
+        boolean defaultSeparation = RBSeparation.isSelected();
+        boolean existingAlphabet = RBExistingAlphabet.isSelected();
         if (RBSeparation.isSelected()) {
             regex = "-";
         }else{
             regex = TFSeparation.getText();
         }
-        String name = TFName.getText();
+        String name = TFName.getText().trim();
         String components = TAAlphabet.getText();
-        return new Alphabet(name, components, regex);
+        return new Alphabet(name, components, regex, defaultSeparation, existingAlphabet);
     }
 }

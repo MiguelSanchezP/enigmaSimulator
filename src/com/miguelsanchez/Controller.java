@@ -24,16 +24,15 @@ public class Controller {
     private BorderPane mainBorderPane;
 
     public void createANewMachine() {
-        boolean isCancel = true;
+        boolean newMachineCancel = true;
         Machine tempMachine = new Machine();
-        while (isCancel) {
+        while (newMachineCancel) {
             Dialog<ButtonType> machineDialog = new Dialog<>();
             machineDialog.initOwner(mainBorderPane.getScene().getWindow());
             machineDialog.setTitle("Create a new machine");
             machineDialog.setHeaderText("Use this dialog to create a new Enigma machine");
             FXMLLoader machineFxmlLoader = new FXMLLoader();
             machineFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewMachine.fxml"));
-//            NewMachine machine = machineFxmlLoader.getController();
             try {
                 machineDialog.getDialogPane().setContent(machineFxmlLoader.load());
                 NewMachine machine = machineFxmlLoader.getController();
@@ -49,11 +48,19 @@ public class Controller {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 NewMachine machine = machineFxmlLoader.getController();
                 tempMachine = machine.getResults();
-                isCancel = false;
+                newMachineCancel = false;
                 if (tempMachine.getName().isEmpty() || tempMachine.getDescription().isEmpty()) {
                     Optional<ButtonType> result2 = emptyFieldsAlert();
                     if (result2.isPresent() && result2.get() == ButtonType.CANCEL) {
-                        isCancel = true;
+                        newMachineCancel = true;
+                    }
+                    if (result2.isPresent() && result2.get() == ButtonType.OK) {
+                        if (tempMachine.getName().isEmpty()) {
+                            tempMachine.setName("Unnamed machine");
+                        }
+                        if (tempMachine.getDescription().isEmpty()) {
+                            tempMachine.setDescription ("Empty description");
+                        }
                     }
                 }
                 if (tempMachine.getTotalRotors() < tempMachine.getOperatingRotors()) {
@@ -62,7 +69,7 @@ public class Controller {
                     alert.setHeaderText("Error in the quantity of rotors selection");
                     alert.setContentText("There are more rotors operating than the total\nGo back and change the values?");
                     alert.showAndWait();
-                    isCancel = true;
+                    newMachineCancel = true;
                 }
                 if (!tempMachine.isNewAlphabet() && tempMachine.getAlphabet().getName().equals("NoAlphabet")) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -95,26 +102,39 @@ public class Controller {
         //finish the machine
 
         if (tempMachine.isNewAlphabet()) {
+            Alphabet tempAlphabet = new Alphabet();
             boolean newAlphabetCancel = true;
             while (newAlphabetCancel) {
                 Dialog<ButtonType> alphabetDialog = new Dialog<>();
                 FXMLLoader alphabetFxmlLoader = new FXMLLoader();
                 alphabetFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
-//                NewAlphabet alphabet = alphabetFxmlLoader.getController();
                 try {
                     alphabetDialog.getDialogPane().setContent(alphabetFxmlLoader.load());
+                    NewAlphabet alphabet = alphabetFxmlLoader.getController();
+                    alphabet.setAlphabet(tempAlphabet);
                 }catch (IOException e) {
                     e.printStackTrace();
                 }
                 alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
                 alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-                Optional<ButtonType> result2 = alphabetDialog.showAndWait();
-                if (result2.isPresent() && result2.get() == ButtonType.OK) {
-                    NewAlphabet alphabet = alphabetFxmlLoader.getController();
-                    Alphabet tempAlphabet = alphabet.getResults();
-                    tempMachine.setAlphabet (tempAlphabet);
-                    Alphabet.addAlphabet(tempAlphabet);
+                Optional<ButtonType> result = alphabetDialog.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     newAlphabetCancel = false;
+                    NewAlphabet alphabet = alphabetFxmlLoader.getController();
+                    tempAlphabet = alphabet.getResults();
+//                    tempMachine.setAlphabet (tempAlphabet);
+                    if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
+                        Alert alert = new Alert (Alert.AlertType.ERROR);
+                        alert.setTitle("Empty Fields");
+                        alert.setHeaderText("There were some empty fields");
+                        alert.setContentText("Fill them in order to continue");
+                        Optional<ButtonType> result2 = alert.showAndWait();
+                        if (result2.isPresent() && result2.get() == ButtonType.OK) {
+                            newAlphabetCancel = true;
+                        }
+                    }else {
+                        Alphabet.addAlphabet(tempAlphabet);
+                    }
                 }
             }
         }
@@ -188,6 +208,8 @@ public class Controller {
                 if (currentRotor > 0) {
                     currentRotor -= 1;
                 }
+                    Alphabet.addAlphabet(tempAlphabet);
+                    newAlphabetCancel = false;
                 if (tempRotors.size() == (currentRotor + 1)) {
                     NewRotor controller = fxmlLoader.getController();
                     tempRotors.add(controller.newRotor());

@@ -1,6 +1,7 @@
 package com.miguelsanchez.newComponentsControllers;
 
 import com.miguelsanchez.components.Alphabet;
+import com.miguelsanchez.components.Machine;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -26,7 +27,7 @@ public class NewMachine {
         alphabetsFill(CBAlphabets);
     }
 
-    public com.miguelsanchez.components.Machine getResults() {
+    public Machine getResults() {
         String name = TFName.getText().trim();
         String description = TADescription.getText().trim();
         int totalRotors = (int) SRotors.getValue();
@@ -45,7 +46,7 @@ public class NewMachine {
             selection = "7Bf*RtArj+aKWz53g_Jp";
         }
         Alphabet alphabet = Alphabet.getAlphabet(selection);
-        return new com.miguelsanchez.components.Machine(name, description, reflectorPresent, totalRotors, operatingRotors, totalReflectors, plugboardPresent, newAlphabet, alphabet);
+        return new Machine(name, description, reflectorPresent, totalRotors, operatingRotors, totalReflectors, plugboardPresent, newAlphabet, alphabet);
     }
 
     @FXML
