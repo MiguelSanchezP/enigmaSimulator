@@ -1,7 +1,9 @@
 package com.miguelsanchez;
 
 import com.miguelsanchez.components.Alphabet;
+import com.miguelsanchez.components.Machine;
 import com.miguelsanchez.components.Rotor;
+import com.miguelsanchez.newComponentsControllers.NewAlphabet;
 import com.miguelsanchez.newComponentsControllers.NewMachine;
 import com.miguelsanchez.newComponentsControllers.NewPlugboard;
 import com.miguelsanchez.newComponentsControllers.NewRotor;
@@ -23,7 +25,7 @@ public class Controller {
 
     public void createANewMachine() {
         boolean isCancel = true;
-        com.miguelsanchez.components.Machine tempMachine = new com.miguelsanchez.components.Machine();
+        Machine tempMachine = new Machine();
         while (isCancel) {
             Dialog<ButtonType> machineDialog = new Dialog<>();
             machineDialog.initOwner(mainBorderPane.getScene().getWindow());
@@ -31,10 +33,11 @@ public class Controller {
             machineDialog.setHeaderText("Use this dialog to create a new Enigma machine");
             FXMLLoader machineFxmlLoader = new FXMLLoader();
             machineFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewMachine.fxml"));
+//            NewMachine machine = machineFxmlLoader.getController();
             try {
                 machineDialog.getDialogPane().setContent(machineFxmlLoader.load());
-                NewMachine controller = machineFxmlLoader.getController();
-                controller.setMachine(tempMachine);
+                NewMachine machine = machineFxmlLoader.getController();
+                machine.setMachine(tempMachine);
             } catch (IOException e) {
                 System.out.println("Couldn't load the dialog");
                 e.printStackTrace();
@@ -44,9 +47,8 @@ public class Controller {
             machineDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
             Optional<ButtonType> result = machineDialog.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                NewMachine controller = machineFxmlLoader.getController();
-                tempMachine = controller.getResults();
-                System.out.println(tempMachine.getAlphabet().getName());
+                NewMachine machine = machineFxmlLoader.getController();
+                tempMachine = machine.getResults();
                 isCancel = false;
                 if (tempMachine.getName().isEmpty() || tempMachine.getDescription().isEmpty()) {
                     Optional<ButtonType> result2 = emptyFieldsAlert();
@@ -96,19 +98,27 @@ public class Controller {
             boolean newAlphabetCancel = true;
             while (newAlphabetCancel) {
                 Dialog<ButtonType> alphabetDialog = new Dialog<>();
-                FXMLLoader fxmlLoaderAlphabet = new FXMLLoader();
-                fxmlLoaderAlphabet.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
+                FXMLLoader alphabetFxmlLoader = new FXMLLoader();
+                alphabetFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
+//                NewAlphabet alphabet = alphabetFxmlLoader.getController();
                 try {
-                    alphabetDialog.getDialogPane().setContent(fxmlLoaderAlphabet.load());
+                    alphabetDialog.getDialogPane().setContent(alphabetFxmlLoader.load());
                 }catch (IOException e) {
                     e.printStackTrace();
                 }
                 alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
                 alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
                 Optional<ButtonType> result2 = alphabetDialog.showAndWait();
+                if (result2.isPresent() && result2.get() == ButtonType.OK) {
+                    NewAlphabet alphabet = alphabetFxmlLoader.getController();
+                    Alphabet tempAlphabet = alphabet.getResults();
+                    tempMachine.setAlphabet (tempAlphabet);
+                    Alphabet.addAlphabet(tempAlphabet);
+                    newAlphabetCancel = false;
+                }
             }
         }
-
+/*
         //STARTING OF THE PLUGBOARD
         boolean plugCancel = true;
         while (plugCancel) {
@@ -202,7 +212,7 @@ public class Controller {
                 }
             }
         }
-
+*/
     }
 
     private Optional<ButtonType> emptyFieldsAlert () {

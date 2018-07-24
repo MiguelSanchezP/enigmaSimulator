@@ -9,29 +9,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Alphabet {
     private String name;
     private String[] components;
-    private static ArrayList<Alphabet> alphabets = new ArrayList<Alphabet>() {{
-        add(new Alphabet ("Standard", "A-B-C-D-E-F-G-H-I-J-K-L-M-N-o-P-Q-R-S-T-U-V-W-X-Y-Z"));
-    }};
+    private String regex;
     private static String filename = "./Files/alphabets.txt";
     private static ObservableList<Alphabet> alphabetsOL;
 
-    public Alphabet(String name, String components) {
+    public Alphabet(String name, String components, String regex) {
         this.name = name;
-        this.components = components.split("-");
+        this.components = components.split(regex);
+        this.regex = regex;
     }
     private Alphabet (String name) {
         this.name = name;
-    }
-
-    private Alphabet (String name, String[] components) {
-        this.name = name;
-        this.components = components;
     }
 
     public String getName () {
@@ -42,11 +35,12 @@ public class Alphabet {
         return components;
     }
 
-//    public Alphabet getAlphabet (int i) {
-//        return alphabets.get(i);
-//    }
+    public String getRegex () {
+        return regex;
+    }
+
     public static Alphabet getAlphabet (String name) {
-        for (Alphabet alphabet : alphabets) {
+        for (Alphabet alphabet : alphabetsOL) {
             if (alphabet.getName().equals(name)) {
                 return alphabet;
             }
@@ -54,17 +48,16 @@ public class Alphabet {
         if (name.equals("7Bf*RtArj+aKWz53g_Jp")) {
             return new Alphabet ("NoAlphabet");
         }
-        return alphabets.get(0);
+        return alphabetsOL.get(0);
     }
 
-    public static String toString (String[] input) {
-        String string = "";
-
+    public static String toString (String[] input, String regex) {
+        StringBuilder sb = new StringBuilder();
         for (String s : input) {
-            string += s;
-            string += "-";
+            sb.append(s);
+            sb.append(regex);
         }
-        return string;
+        return sb.toString();
     }
 
     public static ObservableList<String> getAlphabetsOL () {
@@ -75,23 +68,29 @@ public class Alphabet {
         return tempList;
     }
 
+    public static void addAlphabet (Alphabet alphabet) {
+        alphabetsOL.add(alphabet);
+        try {
+            storeAlphabets();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void storeAlphabets () throws IOException {
         Path path = Paths.get(filename);
         BufferedWriter bw = Files.newBufferedWriter(path);
 
-//        try (BufferedWriter bw = Files.newBufferedWriter(path)){
         try {
             Iterator<Alphabet> alphabetsIterator = alphabetsOL.iterator();
             while(alphabetsIterator.hasNext()) {
                 Alphabet alphabet = alphabetsIterator.next();
-                bw.write(String.format("%s\t%s",
+                bw.write(String.format("%s\t%s\t%s",
                         alphabet.getName(),
-                        toString(alphabet.getComponents())));
+                        toString(alphabet.getComponents(), alphabet.getRegex()),
+                        alphabet.getRegex()));
                 bw.newLine();
             }
-//            for (Alphabet alphabet : alphabetsOL) {
-//                bw.write(String.format("%s\t%s", alphabet.getName(), toString(alphabet.getComponents())));
-//            }
         } finally {
             bw.close();
         }
@@ -108,7 +107,8 @@ public class Alphabet {
                 String[] alphabetParts = input.split("\t");
                 String name = alphabetParts [0];
                 String components = alphabetParts[1];
-                Alphabet alphabet = new Alphabet (name, components);
+                String regex = alphabetParts [2];
+                Alphabet alphabet = new Alphabet (name, components, regex);
                 alphabetsOL.add(alphabet);
             }
         }finally{

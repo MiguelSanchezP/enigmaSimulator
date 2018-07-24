@@ -14,7 +14,7 @@ public class NewAlphabet {
     @FXML
     private RadioButton RBSeparation, RBExistingAlphabet;
     @FXML
-    private TextField TFSeparation;
+    private TextField TFSeparation, TFName;
     @FXML
     private ComboBox<String> CBExistingAlphabet;
     @FXML
@@ -28,25 +28,35 @@ public class NewAlphabet {
 
     @FXML
     private void handleRBSeparation () {
-        TFSeparation.setDisable(!RBSeparation.isSelected());
+        TFSeparation.setDisable(RBSeparation.isSelected());
     }
     @FXML
     private void handleRBExistingAlphabet () {
         CBExistingAlphabet.setDisable(!RBExistingAlphabet.isSelected());
-        if (RBExistingAlphabet.isSelected()) {
-            text=TAAlphabet.getText();
-            Alphabet tempAlphabet = getAlphabet(CBExistingAlphabet.getValue());
-            TAAlphabet.setText(Alphabet.toString(tempAlphabet.getComponents()));
-        }else{
+        if (!RBExistingAlphabet.isSelected()) {
             TAAlphabet.setText(text);
         }
     }
     @FXML
     private void handleCBExistingAlphabet () {
-        text = TAAlphabet.getText();
+        text=TAAlphabet.getText();
         Alphabet tempAlphabet = getAlphabet(CBExistingAlphabet.getValue());
-        TAAlphabet.setText(Alphabet.toString(tempAlphabet.getComponents()));
-        RBSeparation.setSelected(false);
+        TAAlphabet.setText(Alphabet.toString(tempAlphabet.getComponents(), tempAlphabet.getRegex()));
+        RBSeparation.setSelected(tempAlphabet.getRegex().equals("-"));
+        TFSeparation.setText(tempAlphabet.getRegex());
         handleRBSeparation();
+//        }
+    }
+
+    public Alphabet getResults () {
+        String regex;
+        if (RBSeparation.isSelected()) {
+            regex = "-";
+        }else{
+            regex = TFSeparation.getText();
+        }
+        String name = TFName.getText();
+        String components = TAAlphabet.getText();
+        return new Alphabet(name, components, regex);
     }
 }
