@@ -1,11 +1,11 @@
-package com.miguelsanchez;
+package com.miguelsanchez.newComponentsControllers;
 
-import com.miguelsanchez.auxiliars.Alphabet;
+import com.miguelsanchez.components.Alphabet;
 import com.miguelsanchez.components.Machine;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class NewMachineController {
+public class NewMachine {
     @FXML
     private RadioButton RBReflector, RBPlugboard;
     @FXML
@@ -25,7 +25,7 @@ public class NewMachineController {
         CBAlphabets.setItems(Alphabet.getAlphabetsOL());
     }
 
-    Machine getResults() {
+    public com.miguelsanchez.components.Machine getResults() {
         String name = TFName.getText().trim();
         String description = TADescription.getText().trim();
         int totalRotors = (int) SRotors.getValue();
@@ -39,7 +39,12 @@ public class NewMachineController {
         }
         boolean plugboardPresent = RBPlugboard.isSelected();
         boolean newAlphabet = RBNewAlphabet.isSelected();
-        return new Machine(name, description, reflectorPresent, totalRotors, operatingRotors, totalReflectors, plugboardPresent, newAlphabet);
+        String selection = (String) CBAlphabets.getValue();
+        if (selection == null) {
+            selection = "7Bf*RtArj+aKWz53g_Jp";
+        }
+        Alphabet alphabet = Alphabet.getAlphabet(selection);
+        return new com.miguelsanchez.components.Machine(name, description, reflectorPresent, totalRotors, operatingRotors, totalReflectors, plugboardPresent, newAlphabet, alphabet);
     }
 
     @FXML
@@ -47,7 +52,7 @@ public class NewMachineController {
         setReflectorsPosition(RBReflector.isSelected());
     }
 
-    void setMachine(Machine machine) {
+    public void setMachine(com.miguelsanchez.components.Machine machine) {
         TFName.setText(machine.getName());
         TADescription.setText(machine.getDescription());
         RBReflector.setSelected(machine.isReflectorPresent());

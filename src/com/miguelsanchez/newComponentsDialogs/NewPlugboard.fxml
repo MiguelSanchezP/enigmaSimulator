@@ -7,7 +7,7 @@
 
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.miguelsanchez.NewPlugboardController">
+            fx:controller="com.miguelsanchez.newComponentsControllers.NewPlugboard">
     <content>
         <GridPane vgap="15" hgap="15" fx:id="PlugConfigurationPane">
             <RadioButton text="Double direction wire" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true" fx:id="RBDoubleWire">

@@ -1,4 +1,4 @@
-package com.miguelsanchez;
+package com.miguelsanchez.newComponentsControllers;
 
 import com.miguelsanchez.components.Rotor;
 import javafx.fxml.FXML;
@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 
 import java.util.LinkedList;
 
-public class NewRotorController {
+public class NewRotor {
     @FXML
     private TextField TFName;
     @FXML
@@ -18,12 +18,12 @@ public class NewRotorController {
     @FXML
     private Label LWiring;
 
-    Rotor newRotor () {
+    public Rotor newRotor() {
         return new Rotor(TFName.getText(), TAWiring.getText(), RBSpecialName.isSelected(), RBNumbers.isSelected(),
                 RBActiveRotor.isSelected(), RBConfigureLater.isSelected(), RBConfigurationAsLetters.isSelected());
     }
 
-    void loadRotor (LinkedList<Rotor> list, int pos) {
+    public void loadRotor (LinkedList<Rotor> list, int pos) {
         TFName.setText(list.get(pos).getName());
         TAWiring.setText(list.get(pos).getWiring());
         RBSpecialName.setSelected(list.get(pos).isSpecialName());

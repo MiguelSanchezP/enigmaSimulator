@@ -1,7 +1,10 @@
 package com.miguelsanchez;
 
-import com.miguelsanchez.components.Machine;
+import com.miguelsanchez.components.Alphabet;
 import com.miguelsanchez.components.Rotor;
+import com.miguelsanchez.newComponentsControllers.NewMachine;
+import com.miguelsanchez.newComponentsControllers.NewPlugboard;
+import com.miguelsanchez.newComponentsControllers.NewRotor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -20,29 +23,30 @@ public class Controller {
 
     public void createANewMachine() {
         boolean isCancel = true;
-        Machine tempMachine = new Machine();
+        com.miguelsanchez.components.Machine tempMachine = new com.miguelsanchez.components.Machine();
         while (isCancel) {
-            Dialog<ButtonType> newDialog = new Dialog<>();
-            newDialog.initOwner(mainBorderPane.getScene().getWindow());
-            newDialog.setTitle("Create a new machine");
-            newDialog.setHeaderText("Use this dialog to create a new Enigma machine");
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("newMachine.fxml"));
+            Dialog<ButtonType> machineDialog = new Dialog<>();
+            machineDialog.initOwner(mainBorderPane.getScene().getWindow());
+            machineDialog.setTitle("Create a new machine");
+            machineDialog.setHeaderText("Use this dialog to create a new Enigma machine");
+            FXMLLoader machineFxmlLoader = new FXMLLoader();
+            machineFxmlLoader.setLocation(getClass().getResource("NewMachine.fxml"));
             try {
-                newDialog.getDialogPane().setContent(fxmlLoader.load());
-                NewMachineController controller = fxmlLoader.getController();
+                machineDialog.getDialogPane().setContent(machineFxmlLoader.load());
+                NewMachine controller = machineFxmlLoader.getController();
                 controller.setMachine(tempMachine);
             } catch (IOException e) {
                 System.out.println("Couldn't load the dialog");
                 e.printStackTrace();
                 return;
             }
-            newDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-            newDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-            Optional<ButtonType> result = newDialog.showAndWait();
+            machineDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            machineDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+            Optional<ButtonType> result = machineDialog.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                NewMachineController controller = fxmlLoader.getController();
+                NewMachine controller = machineFxmlLoader.getController();
                 tempMachine = controller.getResults();
+                System.out.println(tempMachine.getAlphabet().getName());
                 isCancel = false;
                 if (tempMachine.getName().isEmpty() || tempMachine.getDescription().isEmpty()) {
                     Optional<ButtonType> result2 = emptyFieldsAlert();
@@ -57,6 +61,16 @@ public class Controller {
                     alert.setContentText("There are more rotors operating than the total\nGo back and change the values?");
                     alert.showAndWait();
                     isCancel = true;
+                }
+                if (!tempMachine.isNewAlphabet() && tempMachine.getAlphabet().getName().equals("NoAlphabet")) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle ("Select an alphabet");
+                    alert.setHeaderText ("There was no alphabet selected");
+                    alert.setContentText ("Are you sure you want to continue?\nIf you press ok, the standard alphabet will be selected");
+                    Optional<ButtonType> result2 = alert.showAndWait();
+                    if (result2.isPresent() && result2.get() == ButtonType.OK) {
+                        tempMachine.setAlphabet (Alphabet.getAlphabet("Standard"));
+                    }
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -79,9 +93,11 @@ public class Controller {
         //finish the machine
 
         if (tempMachine.isNewAlphabet()) {
-            boolean newAlphabetCancel =true;
+            boolean newAlphabetCancel = true;
             while (newAlphabetCancel) {
                 Dialog<ButtonType> alphabetDialog = new Dialog<>();
+                FXMLLoader fxmlLoaderAlphabet = new FXMLLoader();
+                fxmlLoaderAlphabet.setLocation(getClass().getResource("NewAlphabet.fxml"));
             }
         }
 
@@ -90,10 +106,10 @@ public class Controller {
         while (plugCancel) {
             Dialog<ButtonType> plugConfigDialog = new Dialog<>();
             FXMLLoader fxmlLoader2 = new FXMLLoader();
-            fxmlLoader2.setLocation(getClass().getResource("newPlugboard.fxml"));
+            fxmlLoader2.setLocation(getClass().getResource("NewPlugboard.fxml"));
             try {
                 plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
-                NewPlugboardController controller2 = fxmlLoader2.getController();
+                NewPlugboard controller2 = fxmlLoader2.getController();
 //                                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -116,7 +132,7 @@ public class Controller {
             try {
                 newRotorDialog.getDialogPane().setContent(fxmlLoader.load());
                 if (currentRotor != tempRotors.size()) {
-                    NewRotorController controller = fxmlLoader.getController();
+                    NewRotor controller = fxmlLoader.getController();
                     controller.loadRotor(tempRotors, currentRotor);
                 }
             } catch (IOException e) {
@@ -129,7 +145,7 @@ public class Controller {
             Optional<ButtonType> result1 = newRotorDialog.showAndWait();
             if (result1.isPresent() && result1.get() == ButtonType.NEXT) {
                 currentRotor += 1;
-                NewRotorController controller = fxmlLoader.getController();
+                NewRotor controller = fxmlLoader.getController();
                 Rotor temporalRotor = controller.newRotor();
                 boolean cancelPressed = false;
                 if (temporalRotor.getWiring().isEmpty() && !temporalRotor.isConfigureLater()) {
@@ -155,12 +171,12 @@ public class Controller {
                     currentRotor -= 1;
                 }
                 if (tempRotors.size() == (currentRotor + 1)) {
-                    NewRotorController controller = fxmlLoader.getController();
+                    NewRotor controller = fxmlLoader.getController();
                     tempRotors.add(controller.newRotor());
                 }
             } else {
                 if (tempRotors.size() == (currentRotor - 1)) {
-                    NewRotorController controller = fxmlLoader.getController();
+                    NewRotor controller = fxmlLoader.getController();
                     tempRotors.add(controller.newRotor());
                 }
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

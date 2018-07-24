@@ -9,9 +9,10 @@ public class Machine {
     private int totalReflectors;
     private boolean bidirectionalEncryption;
     private boolean newAlphabet;
+    private Alphabet alphabet;
 
     public Machine (String name, String description, boolean reflectorPresent, int totalRotors, int operatingRotors,
-                    int totalReflectors, boolean bidirectionalEncryption, boolean newAlphabet) {
+                    int totalReflectors, boolean bidirectionalEncryption, boolean newAlphabet, Alphabet alphabet) {
         this.name = name;
         this.description = description;
         this.reflectorPresent = reflectorPresent;
@@ -20,6 +21,7 @@ public class Machine {
         this.totalReflectors = totalReflectors;
         this.bidirectionalEncryption = bidirectionalEncryption;
         this.newAlphabet = newAlphabet;
+        this.alphabet = alphabet;
     }
     public Machine () {
         this.name = "";
@@ -53,5 +55,17 @@ public class Machine {
     }
     public boolean isNewAlphabet () {
         return newAlphabet;
+    }
+    public void setAlphabet (Alphabet alphabet) {
+        this.alphabet = alphabet;
+    }
+    public void setName (String name) {
+        this.name = name;
+    }
+    public void setDescription (String description) {
+        this.description = description;
+    }
+    public Alphabet getAlphabet () {
+        return alphabet;
     }
 }

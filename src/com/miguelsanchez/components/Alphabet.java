@@ -1,4 +1,4 @@
-package com.miguelsanchez.auxiliars;
+package com.miguelsanchez.components;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +25,9 @@ public class Alphabet {
         this.name = name;
         this.components = components.split("-");
     }
+    public Alphabet (String name) {
+        this.name = name;
+    }
 
     public String getName () {
         return this.name;
@@ -46,14 +49,17 @@ public class Alphabet {
                 return alphabet;
             }
         }
+        if (name.equals("7Bf*RtArj+aKWz53g_Jp")) {
+            return new Alphabet ("NoAlphabet");
+        }
         return alphabets.get(0);
     }
 
     private String toString (String[] input) {
         String string = "";
 
-        for (int i = 0; i< input.length; i++) {
-            string += input[i];
+        for (String s : input) {
+            string += s;
             string += " ";
         }
         return string;
