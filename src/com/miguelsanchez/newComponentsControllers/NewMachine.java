@@ -1,9 +1,10 @@
 package com.miguelsanchez.newComponentsControllers;
 
 import com.miguelsanchez.components.Alphabet;
-import com.miguelsanchez.components.Machine;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import static com.miguelsanchez.auxiliars.FillComboBox.alphabetsFill;
 
 public class NewMachine {
     @FXML
@@ -17,12 +18,12 @@ public class NewMachine {
     @FXML
     private TextArea TADescription;
     @FXML
-    private ComboBox CBAlphabets;
+    private ComboBox<String> CBAlphabets;
     @FXML
     private RadioButton RBNewAlphabet;
 
     public void initialize () {
-        CBAlphabets.setItems(Alphabet.getAlphabetsOL());
+        alphabetsFill(CBAlphabets);
     }
 
     public com.miguelsanchez.components.Machine getResults() {
@@ -39,7 +40,7 @@ public class NewMachine {
         }
         boolean plugboardPresent = RBPlugboard.isSelected();
         boolean newAlphabet = RBNewAlphabet.isSelected();
-        String selection = (String) CBAlphabets.getValue();
+        String selection = CBAlphabets.getValue();
         if (selection == null) {
             selection = "7Bf*RtArj+aKWz53g_Jp";
         }

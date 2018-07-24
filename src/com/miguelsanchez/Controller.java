@@ -30,7 +30,7 @@ public class Controller {
             machineDialog.setTitle("Create a new machine");
             machineDialog.setHeaderText("Use this dialog to create a new Enigma machine");
             FXMLLoader machineFxmlLoader = new FXMLLoader();
-            machineFxmlLoader.setLocation(getClass().getResource("NewMachine.fxml"));
+            machineFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewMachine.fxml"));
             try {
                 machineDialog.getDialogPane().setContent(machineFxmlLoader.load());
                 NewMachine controller = machineFxmlLoader.getController();
@@ -97,7 +97,15 @@ public class Controller {
             while (newAlphabetCancel) {
                 Dialog<ButtonType> alphabetDialog = new Dialog<>();
                 FXMLLoader fxmlLoaderAlphabet = new FXMLLoader();
-                fxmlLoaderAlphabet.setLocation(getClass().getResource("NewAlphabet.fxml"));
+                fxmlLoaderAlphabet.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
+                try {
+                    alphabetDialog.getDialogPane().setContent(fxmlLoaderAlphabet.load());
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+                alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+                Optional<ButtonType> result2 = alphabetDialog.showAndWait();
             }
         }
 
@@ -106,7 +114,7 @@ public class Controller {
         while (plugCancel) {
             Dialog<ButtonType> plugConfigDialog = new Dialog<>();
             FXMLLoader fxmlLoader2 = new FXMLLoader();
-            fxmlLoader2.setLocation(getClass().getResource("NewPlugboard.fxml"));
+            fxmlLoader2.setLocation(getClass().getResource("newComponentsDialogs/NewPlugboard.fxml"));
             try {
                 plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
                 NewPlugboard controller2 = fxmlLoader2.getController();
@@ -128,7 +136,7 @@ public class Controller {
             newRotorDialog.setTitle("Creation of a rotor");
             newRotorDialog.setHeaderText("Use this dialog to create/edit the rotor " + (currentRotor + 1) + " out of " + tempMachine.getTotalRotors());
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("NewRotor.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewRotor.fxml"));
             try {
                 newRotorDialog.getDialogPane().setContent(fxmlLoader.load());
                 if (currentRotor != tempRotors.size()) {

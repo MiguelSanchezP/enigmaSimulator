@@ -18,15 +18,20 @@ public class Alphabet {
     private static ArrayList<Alphabet> alphabets = new ArrayList<Alphabet>() {{
         add(new Alphabet ("Standard", "A-B-C-D-E-F-G-H-I-J-K-L-M-N-o-P-Q-R-S-T-U-V-W-X-Y-Z"));
     }};
-    private static String filename = "alphabets.txt";
+    private static String filename = "./Files/alphabets.txt";
     private static ObservableList<Alphabet> alphabetsOL;
 
     public Alphabet(String name, String components) {
         this.name = name;
         this.components = components.split("-");
     }
-    public Alphabet (String name) {
+    private Alphabet (String name) {
         this.name = name;
+    }
+
+    private Alphabet (String name, String[] components) {
+        this.name = name;
+        this.components = components;
     }
 
     public String getName () {
@@ -37,12 +42,9 @@ public class Alphabet {
         return components;
     }
 
-    public static ArrayList<Alphabet> getAlphabets () {
-        return alphabets;
-    }
-    public Alphabet getAlphabet (int i) {
-        return alphabets.get(i);
-    }
+//    public Alphabet getAlphabet (int i) {
+//        return alphabets.get(i);
+//    }
     public static Alphabet getAlphabet (String name) {
         for (Alphabet alphabet : alphabets) {
             if (alphabet.getName().equals(name)) {
@@ -55,12 +57,12 @@ public class Alphabet {
         return alphabets.get(0);
     }
 
-    private String toString (String[] input) {
+    public static String toString (String[] input) {
         String string = "";
 
         for (String s : input) {
             string += s;
-            string += " ";
+            string += "-";
         }
         return string;
     }
@@ -73,19 +75,23 @@ public class Alphabet {
         return tempList;
     }
 
-    public void storeAlphabets () throws IOException {
+    public static void storeAlphabets () throws IOException {
         Path path = Paths.get(filename);
         BufferedWriter bw = Files.newBufferedWriter(path);
 
+//        try (BufferedWriter bw = Files.newBufferedWriter(path)){
         try {
             Iterator<Alphabet> alphabetsIterator = alphabetsOL.iterator();
             while(alphabetsIterator.hasNext()) {
                 Alphabet alphabet = alphabetsIterator.next();
                 bw.write(String.format("%s\t%s",
                         alphabet.getName(),
-                        alphabet.getComponents().toString()));
+                        toString(alphabet.getComponents())));
                 bw.newLine();
             }
+//            for (Alphabet alphabet : alphabetsOL) {
+//                bw.write(String.format("%s\t%s", alphabet.getName(), toString(alphabet.getComponents())));
+//            }
         } finally {
             bw.close();
         }

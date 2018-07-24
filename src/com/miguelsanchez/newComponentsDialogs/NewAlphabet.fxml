@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.miguelsanchez.newComponentsDialogs.NewAlphabet">
-
+            fx:controller="com.miguelsanchez.newComponentsControllers.NewAlphabet">
+    <content>
+        <GridPane vgap="15" hgap="15">
+            <RadioButton text="Default separation" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true" fx:id="RBSeparation" onAction="#handleRBSeparation">
+                <tooltip>
+                    <Tooltip text="Button Up: separate the alphabet characters with a space; Button Down: separate the alphabet character within the character specified"/>
+                </tooltip>
+            </RadioButton>
+            <TextField promptText="Introduce here the separation character" GridPane.columnIndex="1" GridPane.rowIndex="0" disable="true" fx:id="TFSeparation"/>
+            <RadioButton text="Use an existing alphabet" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="RBExistingAlphabet" onAction="#handleRBExistingAlphabet">
+                <tooltip>
+                    <Tooltip text="Button Up: choose an existing alphabet and modify it; Button Down: create a new alphabet starting by nothing"/>
+                </tooltip>
+            </RadioButton>
+            <ComboBox promptText="Select" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="CBExistingAlphabet" onAction="#handleCBExistingAlphabet"/>
+            <Label text="New alphabet: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextArea promptText="Introduce here the new alphabet character by character separated with a hyphen (A-B-C), if you don't use a hyphen, specify the separator above" GridPane.columnIndex="1" GridPane.rowIndex="2" wrapText="true" fx:id="TAAlphabet"/>
+        </GridPane>
+    </content>
 </DialogPane>
