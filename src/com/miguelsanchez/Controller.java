@@ -122,16 +122,14 @@ public class Controller {
                     newAlphabetCancel = false;
                     NewAlphabet alphabet = alphabetFxmlLoader.getController();
                     tempAlphabet = alphabet.getResults();
-//                    tempMachine.setAlphabet (tempAlphabet);
                     if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
+                        System.out.println("Reached there!! :)");
+                        newAlphabetCancel = true;
                         Alert alert = new Alert (Alert.AlertType.ERROR);
                         alert.setTitle("Empty Fields");
                         alert.setHeaderText("There were some empty fields");
                         alert.setContentText("Fill them in order to continue");
                         Optional<ButtonType> result2 = alert.showAndWait();
-                        if (result2.isPresent() && result2.get() == ButtonType.OK) {
-                            newAlphabetCancel = true;
-                        }
                     }else {
                         Alphabet.addAlphabet(tempAlphabet);
                     }

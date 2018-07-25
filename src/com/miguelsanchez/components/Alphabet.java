@@ -21,7 +21,7 @@ public class Alphabet {
     private static String filename = "./Files/alphabets.txt";
     private static ObservableList<Alphabet> alphabetsOL;
 
-    public Alphabet(String name, String components, String regex) {
+    private Alphabet(String name, String components, String regex) {
         this.name = name;
         this.components = components.split(regex);
         this.regex = regex;
@@ -29,6 +29,7 @@ public class Alphabet {
     private Alphabet (String name) {
         this.name = name;
     }
+
     public Alphabet () {
         this.name = "";
         this.tempComponents = "";
