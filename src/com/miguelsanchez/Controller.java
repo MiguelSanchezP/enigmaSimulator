@@ -123,7 +123,7 @@ public class Controller {
                     NewAlphabet alphabet = alphabetFxmlLoader.getController();
                     tempAlphabet = alphabet.getResults();
                     if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
-                        System.out.println("Reached there!! :)");
+                        System.out.println(tempAlphabet.getTempComponents());
                         newAlphabetCancel = true;
                         Alert alert = new Alert (Alert.AlertType.ERROR);
                         alert.setTitle("Empty Fields");

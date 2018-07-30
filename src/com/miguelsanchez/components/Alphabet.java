@@ -18,6 +18,8 @@ public class Alphabet {
     private String regex;
     private boolean defaultSeparation;
     private boolean existingAlphabet;
+    private String existingAlphabetName;
+    private String text;
     private static String filename = "./Files/alphabets.txt";
     private static ObservableList<Alphabet> alphabetsOL;
 
@@ -36,14 +38,18 @@ public class Alphabet {
         this.regex = "-";
         defaultSeparation = true;
         existingAlphabet = false;
+        this.existingAlphabetName="Select";
+        this.text="";
     }
 
-    public Alphabet (String name, String tempComponents, String regex, boolean defaultSeparation, boolean existingAlphabet) {
+    public Alphabet (String name, String tempComponents, String regex, boolean defaultSeparation, boolean existingAlphabet, String existingAlphabetName, String text) {
         this.name = name;
         this.tempComponents = tempComponents;
         this.regex = regex;
         this.defaultSeparation = defaultSeparation;
         this.existingAlphabet = existingAlphabet;
+        this.existingAlphabetName = existingAlphabetName;
+        this.text=text;
     }
 
     public String getName () {
@@ -64,6 +70,14 @@ public class Alphabet {
 
     public boolean isExistingAlphabet () {
         return existingAlphabet;
+    }
+
+    public String getExistingAlphabetName () {
+        return existingAlphabetName;
+    }
+
+    public String getText () {
+        return text;
     }
 
     public String getTempComponents () {

@@ -21,7 +21,6 @@ public class NewAlphabet {
     private TextArea TAAlphabet;
 
     private String text;
-    private String selection;
 
     public void initialize () {
         alphabetsFill (CBExistingAlphabet);
@@ -31,6 +30,7 @@ public class NewAlphabet {
         String regex;
         boolean defaultSeparation = RBSeparation.isSelected();
         boolean existingAlphabet = RBExistingAlphabet.isSelected();
+        String existingAlphabetName = CBExistingAlphabet.getValue();
         if (RBSeparation.isSelected()) {
             regex = "-";
         }else{
@@ -38,7 +38,7 @@ public class NewAlphabet {
         }
         String name = TFName.getText().trim();
         String tempComponents = TAAlphabet.getText();
-        return new Alphabet (name, tempComponents, regex, defaultSeparation, existingAlphabet);
+        return new Alphabet (name, tempComponents, regex, defaultSeparation, existingAlphabet, existingAlphabetName, text);
     }
 
     public void setAlphabet (Alphabet a) {
@@ -47,10 +47,8 @@ public class NewAlphabet {
         RBExistingAlphabet.setSelected(a.isExistingAlphabet());
         TFName.setText(a.getName());
         TAAlphabet.setText(a.getTempComponents());
-        text=TAAlphabet.getText();
-        if (Alphabet.getAlphabetsOL().contains(selection)) {
-            CBExistingAlphabet.setValue(selection);
-        }
+        CBExistingAlphabet.setValue(a.getExistingAlphabetName());
+        text = a.getText();
         handleRBSeparation();
         CBExistingAlphabet.setDisable(!RBExistingAlphabet.isSelected());
     }
@@ -62,19 +60,19 @@ public class NewAlphabet {
     @FXML
     private void handleRBExistingAlphabet () {
         CBExistingAlphabet.setDisable(!RBExistingAlphabet.isSelected());
-        if (!RBExistingAlphabet.isSelected()) {
+        if (RBExistingAlphabet.isSelected()) {
+            text = TAAlphabet.getText();
+        }else{
             TAAlphabet.setText(text);
-            selection = "";
         }
     }
     @FXML
     private void handleCBExistingAlphabet () {
-        text=TAAlphabet.getText();
         Alphabet tempAlphabet = getAlphabet(CBExistingAlphabet.getValue());
+        text = TAAlphabet.getText();
         TAAlphabet.setText(Alphabet.toString(tempAlphabet.getComponents(), tempAlphabet.getRegex()));
         RBSeparation.setSelected(tempAlphabet.getRegex().equals("-"));
         TFSeparation.setText(tempAlphabet.getRegex());
-        selection = tempAlphabet.getName();
         handleRBSeparation();
     }
 }
