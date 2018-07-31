@@ -29,8 +29,8 @@ public class Controller {
         while (newMachineCancel) {
             Dialog<ButtonType> machineDialog = new Dialog<>();
             machineDialog.initOwner(mainBorderPane.getScene().getWindow());
-            machineDialog.setTitle("Create a new machine");
-            machineDialog.setHeaderText("Use this dialog to create a new Enigma machine");
+            machineDialog.setTitle("EMS: Create a new machine");
+            machineDialog.setHeaderText("Use this dialog to create a new Enigma Machine");
             FXMLLoader machineFxmlLoader = new FXMLLoader();
             machineFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewMachine.fxml"));
             try {
@@ -73,12 +73,15 @@ public class Controller {
                 }
                 if (!tempMachine.isNewAlphabet() && tempMachine.getAlphabet().getName().equals("NoAlphabet")) {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.getButtonTypes().add(ButtonType.CANCEL);
                     alert.setTitle ("Select an alphabet");
                     alert.setHeaderText ("There was no alphabet selected");
-                    alert.setContentText ("Are you sure you want to continue?\nIf you press ok, the standard alphabet will be selected");
+                    alert.setContentText ("Are you sure you want to continue?\nIf you press ok, the standard alphabet will be\nselected");
                     Optional<ButtonType> result2 = alert.showAndWait();
                     if (result2.isPresent() && result2.get() == ButtonType.OK) {
                         tempMachine.setAlphabet (Alphabet.getAlphabet("Standard"));
+                    }else{
+                        newMachineCancel = true;
                     }
                 }
             } else {
@@ -106,6 +109,8 @@ public class Controller {
             boolean newAlphabetCancel = true;
             while (newAlphabetCancel) {
                 Dialog<ButtonType> alphabetDialog = new Dialog<>();
+                alphabetDialog.setTitle("EMS: Create a new Alphabet");
+                alphabetDialog.setHeaderText("Use this dialog to create a new Alphabet");
                 FXMLLoader alphabetFxmlLoader = new FXMLLoader();
                 alphabetFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
                 try {
@@ -129,7 +134,7 @@ public class Controller {
                         alert.setTitle("Empty Fields");
                         alert.setHeaderText("There were some empty fields");
                         alert.setContentText("Fill them in order to continue");
-                        Optional<ButtonType> result2 = alert.showAndWait();
+                        alert.showAndWait();
                     }else {
                         Alphabet.addAlphabet(tempAlphabet);
                     }

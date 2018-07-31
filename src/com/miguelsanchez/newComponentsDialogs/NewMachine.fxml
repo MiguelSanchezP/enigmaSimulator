@@ -23,7 +23,7 @@
                     <Tooltip text="Button Up: there is a plugboard present; Button Down: there is no plugboard on the machine"/>
                 </tooltip>
             </RadioButton>
-            <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Total Quantity of Reflectors" fx:id="LQuantityReflectors"/>
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Total Quantity of Reflectors: " fx:id="LQuantityReflectors"/>
             <Spinner GridPane.columnIndex="1" GridPane.rowIndex="6" min="1" max="4" initialValue="2" editable="true" fx:id="SReflectors"/>
             <RadioButton GridPane.columnIndex="0" GridPane.rowIndex="7" text="New alphabet" fx:id="RBNewAlphabet" onAction="#handleRBNewAlphabet">
                 <tooltip>

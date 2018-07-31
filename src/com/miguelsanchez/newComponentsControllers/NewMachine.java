@@ -80,6 +80,6 @@ public class NewMachine {
 
     @FXML
     private void handleRBNewAlphabet () {
-        CBAlphabets.setDisable(!RBNewAlphabet.isSelected());
+        CBAlphabets.setDisable(RBNewAlphabet.isSelected());
     }
 }
