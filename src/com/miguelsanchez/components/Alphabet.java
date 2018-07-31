@@ -45,6 +45,7 @@ public class Alphabet {
     public Alphabet (String name, String tempComponents, String regex, boolean defaultSeparation, boolean existingAlphabet, String existingAlphabetName, String text) {
         this.name = name;
         this.tempComponents = tempComponents;
+        this.components = tempComponents.split(regex);
         this.regex = regex;
         this.defaultSeparation = defaultSeparation;
         this.existingAlphabet = existingAlphabet;
