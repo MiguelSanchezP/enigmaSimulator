@@ -59,7 +59,7 @@ public class Controller {
                             tempMachine.setName("Unnamed machine");
                         }
                         if (tempMachine.getDescription().isEmpty()) {
-                            tempMachine.setDescription ("Empty description");
+                            tempMachine.setDescription("Empty description");
                         }
                     }
                 }
@@ -72,75 +72,77 @@ public class Controller {
                     newMachineCancel = true;
                 }
                 if (!tempMachine.isNewAlphabet() && tempMachine.getAlphabet().getName().equals("NoAlphabet")) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.getButtonTypes().add(ButtonType.CANCEL);
-                    alert.setTitle ("Select an alphabet");
-                    alert.setHeaderText ("There was no alphabet selected");
-                    alert.setContentText ("Are you sure you want to continue?\nIf you press ok, the standard alphabet will be\nselected");
-                    Optional<ButtonType> result2 = alert.showAndWait();
+                    Optional<ButtonType> result2 = alphabetSelectionAlert();
                     if (result2.isPresent() && result2.get() == ButtonType.OK) {
-                        tempMachine.setAlphabet (Alphabet.getAlphabet("Standard"));
-                    }else{
+                        tempMachine.setAlphabet(Alphabet.getAlphabet("Standard"));
+                    } else {
                         newMachineCancel = true;
                     }
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Close the dialog");
-                alert.setHeaderText("You are about to close the dialog");
-                alert.setContentText("Are you sure you want to close it?\nIf you press ok, the creation will be deleted");
-                Optional<ButtonType> result2 = alert.showAndWait();
-                if (result2.isPresent() && result2.get() == ButtonType.OK) {
+                if (cancelConfirmation()) {
                     return;
                 }
             }
         }
-        //continue with the other menus in the following order:
-        //on the new machine add the temporal names?
-        //0.- Alphabets
-        //1.-Plugboard
-        //2.-Rotation Configuration
-        //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
-        //4.-Reflectors
-        //finish the machine
+            //continue with the other menus in the following order:
+            //on the new machine add the temporal names?
+            //0.- Alphabets
+            //1.-Plugboard
+            //2.-Rotation Configuration
+            //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
+            //4.-Reflectors
+            //finish the machine
 
-        if (tempMachine.isNewAlphabet()) {
-            Alphabet tempAlphabet = new Alphabet();
-            boolean newAlphabetCancel = true;
-            while (newAlphabetCancel) {
-                Dialog<ButtonType> alphabetDialog = new Dialog<>();
-                alphabetDialog.setTitle("EMS: Create a new Alphabet");
-                alphabetDialog.setHeaderText("Use this dialog to create a new Alphabet");
-                FXMLLoader alphabetFxmlLoader = new FXMLLoader();
-                alphabetFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
-                try {
-                    alphabetDialog.getDialogPane().setContent(alphabetFxmlLoader.load());
-                    NewAlphabet alphabet = alphabetFxmlLoader.getController();
-                    alphabet.setAlphabet(tempAlphabet);
-                }catch (IOException e) {
-                    e.printStackTrace();
-                }
-                alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-                alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-                Optional<ButtonType> result = alphabetDialog.showAndWait();
-                if (result.isPresent() && result.get() == ButtonType.OK) {
-                    newAlphabetCancel = false;
-                    NewAlphabet alphabet = alphabetFxmlLoader.getController();
-                    tempAlphabet = alphabet.getResults();
-                    if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
-                        System.out.println(tempAlphabet.getTempComponents());
-                        newAlphabetCancel = true;
-                        Alert alert = new Alert (Alert.AlertType.ERROR);
-                        alert.setTitle("Empty Fields");
-                        alert.setHeaderText("There were some empty fields");
-                        alert.setContentText("Fill them in order to continue");
-                        alert.showAndWait();
-                    }else {
-                        Alphabet.addAlphabet(tempAlphabet);
+            if (tempMachine.isNewAlphabet()) {
+                Alphabet tempAlphabet = new Alphabet();
+                boolean newAlphabetCancel = true;
+                while (newAlphabetCancel) {
+                    Dialog<ButtonType> alphabetDialog = new Dialog<>();
+                    alphabetDialog.setTitle("EMS: Create a new Alphabet");
+                    alphabetDialog.setHeaderText("Use this dialog to create a new Alphabet");
+                    FXMLLoader alphabetFxmlLoader = new FXMLLoader();
+                    alphabetFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewAlphabet.fxml"));
+                    try {
+                        alphabetDialog.getDialogPane().setContent(alphabetFxmlLoader.load());
+                        NewAlphabet alphabet = alphabetFxmlLoader.getController();
+                        alphabet.setAlphabet(tempAlphabet);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+                    alphabetDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+                    Optional<ButtonType> result = alphabetDialog.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        newAlphabetCancel = false;
+                        NewAlphabet alphabet = alphabetFxmlLoader.getController();
+                        tempAlphabet = alphabet.getResults();
+                        if ((tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) || (tempAlphabet.isExistingAlphabet() && tempAlphabet.getExistingAlphabetName().equals("Select"))) {
+                            newAlphabetCancel = true;
+                            if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Empty Fields");
+                                alert.setHeaderText("There were some empty fields");
+                                alert.setContentText("Fill them in order to continue");
+                                alert.showAndWait();
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.ERROR);
+                                alert.setTitle("Select an alphabet");
+                                alert.setHeaderText("There was no alphabet selected");
+                                alert.setContentText("Are you sure you want to continue?\nPlease select one in order to continue");
+                                alert.showAndWait();
+                            }
+                        } else {
+                            Alphabet.addAlphabet(tempAlphabet);
+                        }
+                    } else {
+                        if (cancelConfirmation()) {
+                            return;
+                        }
                     }
                 }
+                System.out.println("Enigma machine theoretically good configured");
             }
-        }
 /*
         //STARTING OF THE PLUGBOARD
         boolean plugCancel = true;
@@ -247,5 +249,23 @@ public class Controller {
         alert.setContentText("Are you sure you want to continue?\nThe empty fields will be completed automatically");
         alert.getButtonTypes().add(ButtonType.CANCEL);
         return alert.showAndWait();
+    }
+
+    private Optional<ButtonType> alphabetSelectionAlert () {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.getButtonTypes().add(ButtonType.CANCEL);
+        alert.setTitle ("Select an alphabet");
+        alert.setHeaderText ("There was no alphabet selected");
+        alert.setContentText ("Are you sure you want to continue?\nIf you press ok, the standard alphabet will be\nautomatically selected");
+        return alert.showAndWait();
+    }
+
+    private boolean cancelConfirmation () {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Close the dialog");
+        alert.setHeaderText("You are about to close the dialog");
+        alert.setContentText("Are you sure you want to close it?\nIf you press ok, the creation will be deleted");
+        Optional<ButtonType> result = alert.showAndWait();
+        return (result.isPresent() && result.get() == ButtonType.OK);
     }
 }
