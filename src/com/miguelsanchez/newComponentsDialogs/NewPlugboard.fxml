@@ -5,6 +5,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tooltip?>
 
+<?import javafx.scene.control.ComboBox?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.miguelsanchez.newComponentsControllers.NewPlugboard">
@@ -15,6 +16,8 @@
                     <Tooltip text="Button Up: the wire goes from A to B and from B to A; Button Down: the wire only goes from A to B"/>
                 </tooltip>
             </RadioButton>
+            <ComboBox GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="CBFirstCharacter"/>
+            <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="CBSecondCharacter"/>
             <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="RBConfigureLater" onAction="#handleRBConfigureLater">
                 <tooltip>
                     <Tooltip text="Button Up: Configure the plugboard later; Button Down: Configure the plugboard now"/>
