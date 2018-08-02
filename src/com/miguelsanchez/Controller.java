@@ -23,6 +23,8 @@ public class Controller {
     @FXML
     private BorderPane mainBorderPane;
 
+    private static String [] alphabetComponents = Alphabet.getAlphabet("Standard").getComponents();
+
     public void createANewMachine() {
         boolean newMachineCancel = true;
         Machine tempMachine = new Machine();
@@ -141,27 +143,26 @@ public class Controller {
                         }
                     }
                 }
-                System.out.println("Enigma machine theoretically good configured");
+                alphabetComponents = tempAlphabet.getComponents();
             }
-/*
+
         //STARTING OF THE PLUGBOARD
         boolean plugCancel = true;
         while (plugCancel) {
-            Dialog<ButtonType> plugConfigDialog = new Dialog<>();
-            FXMLLoader fxmlLoader2 = new FXMLLoader();
-            fxmlLoader2.setLocation(getClass().getResource("newComponentsDialogs/NewPlugboard.fxml"));
+            Dialog<ButtonType> plugboardDialog = new Dialog<>();
+            plugboardDialog.setTitle ("EMS: Create a new Plugboard");
+            plugboardDialog.setHeaderText("Use this dialog to create a new Plugboard");
+            FXMLLoader plugboardFxmlLoader = new FXMLLoader();
+            plugboardFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewPlugboard.fxml"));
             try {
-                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
-                NewPlugboard controller2 = fxmlLoader2.getController();
-//                                plugConfigDialog.getDialogPane().setContent(fxmlLoader2.load());
-            } catch (IOException e) {
+                plugboardDialog.getDialogPane().setContent(plugboardFxmlLoader.load());
+            }catch (IOException e) {
                 e.printStackTrace();
-                plugCancel = false;
             }
-            plugConfigDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-            Optional<ButtonType> wait = plugConfigDialog.showAndWait();
+            plugboardDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            Optional<ButtonType> result = plugboardDialog.showAndWait();
         }
-
+/*
         //STARTING OF THE ROTORS
         LinkedList<Rotor> tempRotors = new LinkedList<>();
         int currentRotor = 0;
@@ -267,5 +268,9 @@ public class Controller {
         alert.setContentText("Are you sure you want to close it?\nIf you press ok, the creation will be deleted");
         Optional<ButtonType> result = alert.showAndWait();
         return (result.isPresent() && result.get() == ButtonType.OK);
+    }
+
+    public static String[] getAlphabetComponents () {
+        return alphabetComponents;
     }
 }
