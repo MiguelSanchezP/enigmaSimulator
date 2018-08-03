@@ -15,7 +15,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Optional;
 
 public class Controller {
@@ -144,6 +143,9 @@ public class Controller {
                     }
                 }
                 alphabetComponents = tempAlphabet.getComponents();
+                tempMachine.setAlphabet(tempAlphabet);
+            }else{
+                alphabetComponents = tempMachine.getAlphabet().getComponents();
             }
 
         //STARTING OF THE PLUGBOARD
