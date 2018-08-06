@@ -7,6 +7,7 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.miguelsanchez.newComponentsControllers.NewPlugboard">
@@ -17,10 +18,11 @@
                     <Tooltip text="Button Up: the wire goes from A to B and from B to A; Button Down: the wire only goes from A to B"/>
                 </tooltip>
             </RadioButton>
-            <ComboBox GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="CBFirstCharacter"/>
+            <ComboBox GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="CBFirstCharacter" onAction="#handleCBFirstCharacter"/>
             <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="CBSecondCharacter"/>
             <Button text="Confirm" GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="BConfirmation" onAction="#handleBConfirmation"/>
-            <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="3" fx:id="RBConfigureLater" onAction="#handleRBConfigureLater">
+            <Label GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" fx:id="LInformation" accessibleText="false"/>
+            <RadioButton text="Configure Later" GridPane.columnIndex="0" GridPane.rowIndex="4" fx:id="RBConfigureLater" onAction="#handleRBConfigureLater">
                 <tooltip>
                     <Tooltip text="Button Up: Configure the plugboard later; Button Down: Configure the plugboard now"/>
                 </tooltip>
