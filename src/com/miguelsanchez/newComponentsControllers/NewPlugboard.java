@@ -75,7 +75,7 @@ public class NewPlugboard {
             });
         }
     }
-
+ /* add the an undo button to configure another wiring*/
     @FXML
     private void handleCBFirstCharacter () {
         String cA = CBFirstCharacter.getValue();
