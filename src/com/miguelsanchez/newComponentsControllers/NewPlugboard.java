@@ -22,6 +22,8 @@ public class NewPlugboard {
     private ComboBox <String> CBFirstCharacter, CBSecondCharacter;
     @FXML
     private Button BConfirmation;
+    @FXML
+    private Label LInformation;
 
     private HashMap<String, String> plugConfiguration = new HashMap<>();
 
@@ -54,23 +56,34 @@ public class NewPlugboard {
             CBFirstCharacter.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
                 @Override
                 public ListCell<String> call(ListView<String> param) {
-                    return new ListCell<String>() {
+                     ListCell<String> cell = new ListCell<String>() {
                         @Override
                         protected void updateItem (String item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (item!=null) {
+                            if (item != null) {
                                 setText(item);
-                                //This won't work for the first time but will be the one
-                                //used in the next calls
-                                getStyleClass().add("my-list-cell");
-                                setTextFill(Color.RED);
-                                //size in px
-                                setFont(Font.font(16));
+                                if (item.equals(cA) || item.equals(cB)) {
+                                    setTextFill (Color.RED);
+                                }
+                            }else{
+                                setText(null);
                             }
                         }
                     };
+                     return cell;
                 }
             });
+        }
+    }
+
+    @FXML
+    private void handleCBFirstCharacter () {
+        String cA = CBFirstCharacter.getValue();
+        if (plugConfiguration.containsKey(cA)) {
+            CBSecondCharacter.setValue(plugConfiguration.get(cA));
+            LInformation.setText("Value already defined");
+        }else{
+            CBSecondCharacter.setValue(cA);
         }
     }
 }
