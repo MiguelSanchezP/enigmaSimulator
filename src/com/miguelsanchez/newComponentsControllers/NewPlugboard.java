@@ -67,7 +67,7 @@ public class NewPlugboard {
             CBSecondCharacter.setValue(cA);
         }
     }
-
+    //fix the error of multiple letters turning red
     private Callback<ListView<String>, ListCell<String>> getColorRed (String cA) {
         return new Callback<ListView<String>, ListCell<String>>() {
             @Override
