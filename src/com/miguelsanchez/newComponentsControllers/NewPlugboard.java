@@ -48,12 +48,18 @@ public class NewPlugboard {
     @FXML
     private void handleBConfirmation() {
         if (RBDoubleWire.isSelected()) {
+            /*continue with the multiple cases*/
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
-            plugConfiguration.put(cA, cB);
-            plugConfiguration.put(cB, cA);
-            CBFirstCharacter.setCellFactory(getColorRed(cA));
-            CBSecondCharacter.setCellFactory(getColorRed(cA));
+            if (plugConfiguration.containsKey(cA)) {
+                LInformation.setText("First letter already configured in the pair (" + plugConfiguration.get(cA) + "," + cA + ")");
+            }else if (plugConfiguration.containsKey(cB)) {
+                LInformation.setText("Second letter already used in the pair (" + plugConfiguration.get(cB) + "," + cB + ")");
+            }else {
+                plugConfiguration.put(cA, cB);
+                plugConfiguration.put(cB, cA);
+                LInformation.setText("Value added successfully");
+            }
         }
     }
 
@@ -66,27 +72,5 @@ public class NewPlugboard {
         } else {
             CBSecondCharacter.setValue(cA);
         }
-    }
-    //fix the error of multiple letters turning red
-    private Callback<ListView<String>, ListCell<String>> getColorRed (String cA) {
-        return new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item);
-                            if (item.equals(cA)) {
-                                setTextFill(Color.RED);
-                            }
-                        } else {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        };
     }
 }
