@@ -3,10 +3,9 @@ package com.miguelsanchez.newComponentsControllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.util.Callback;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import static com.miguelsanchez.Controller.getAlphabetComponents;
@@ -20,18 +19,19 @@ public class NewPlugboard {
     private RadioButton RBConfigureLater, RBDoubleWire;
     @FXML
     private ComboBox<String> CBFirstCharacter, CBSecondCharacter;
+//    @FXML
+//    private Button BConfirmation;
     @FXML
-    private Button BConfirmation;
-    @FXML
-    private Label LInformation;
+    private Label LInformation, LConfiguredLetters;
 
     private HashMap<String, String> plugConfiguration = new HashMap<>();
+    ArrayList<String> letters = new ArrayList<>(); // check if private
 
     public void initialize() {
         alphabetsContentFill(CBFirstCharacter, getAlphabetComponents());
         alphabetsContentFill(CBSecondCharacter, getAlphabetComponents());
-        CBFirstCharacter.setPromptText("A");
-        CBSecondCharacter.setPromptText("A");
+        CBFirstCharacter.setPromptText("Select");
+        CBSecondCharacter.setPromptText("Select");
     }
 
 
@@ -47,18 +47,22 @@ public class NewPlugboard {
 
     @FXML
     private void handleBConfirmation() {
-        if (RBDoubleWire.isSelected()) {
-            /*continue with the multiple cases*/
+        if (RBDoubleWire.isSelected()) {//finish the other cases
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
             if (plugConfiguration.containsKey(cA)) {
                 LInformation.setText("First letter already configured in the pair (" + plugConfiguration.get(cA) + "," + cA + ")");
             }else if (plugConfiguration.containsKey(cB)) {
                 LInformation.setText("Second letter already used in the pair (" + plugConfiguration.get(cB) + "," + cB + ")");
-            }else {
+            }else if ((cA!=null) && cA.equals(cB) || (cB!=null) && cB.equals(cA)) {
+                LInformation.setText("Cannot set a wire to its same position");
+            } else {
                 plugConfiguration.put(cA, cB);
                 plugConfiguration.put(cB, cA);
                 LInformation.setText("Value added successfully");
+                letters.add(cA);
+                letters.add(cB);
+                LConfiguredLetters.setText("Configured: " + toString(letters));
             }
         }
     }
@@ -72,5 +76,15 @@ public class NewPlugboard {
         } else {
             CBSecondCharacter.setValue(cA);
         }
+    }
+
+    private String toString (ArrayList<String> myList) {
+        Collections.sort(myList);
+        StringBuilder sb = new StringBuilder();
+        sb.setLength(0);
+        for (String s : myList) {
+            sb.append(s);
+        }
+        return sb.toString();
     }
 }
