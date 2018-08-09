@@ -27,7 +27,8 @@
                 </tooltip>
             </RadioButton>
             <Label GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" fx:id="LInformation"/>
-            <ProgressBar GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" progress="0.5" prefWidth="250"/>
+            <Label fx:id="LConfiguredLetters" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" wrapText="true"/>
+            <ProgressBar GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" progress="0.5" prefWidth="250"/>
         </GridPane>
     </content>
 </DialogPane>
