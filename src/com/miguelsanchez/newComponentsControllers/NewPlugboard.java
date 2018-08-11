@@ -25,7 +25,7 @@ public class NewPlugboard {
     private Label LInformation, LConfiguredLetters;
 
     private HashMap<String, String> plugConfiguration = new HashMap<>();
-    ArrayList<String> letters = new ArrayList<>(); // check if private
+    private ArrayList<String> letters = new ArrayList<>();
 
     public void initialize() {
         alphabetsContentFill(CBFirstCharacter, getAlphabetComponents());
