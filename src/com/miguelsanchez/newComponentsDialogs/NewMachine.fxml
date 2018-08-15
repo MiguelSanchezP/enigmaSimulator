@@ -31,6 +31,8 @@
                 </tooltip>
             </RadioButton>
             <ComboBox GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="CBAlphabets" promptText="Select"/>
+            <Label text="Step 1 of 5 (0%)" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+            <ProgressBar progress="0" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
         </GridPane>
     </content>
 </DialogPane>
