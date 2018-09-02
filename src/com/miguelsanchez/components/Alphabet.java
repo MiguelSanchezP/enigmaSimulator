@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Alphabet {
     private String name;
@@ -23,7 +25,7 @@ public class Alphabet {
     private static String filename = "./Files/alphabets.txt";
     private static ObservableList<Alphabet> alphabetsOL;
 
-    private Alphabet(String name, String components, String regex) {
+    public Alphabet(String name, String components, String regex) {
         this.name = name;
         this.components = components.split(regex);
         this.regex = regex;
@@ -109,12 +111,23 @@ public class Alphabet {
         return sb.toString();
     }
 
-    public static ObservableList<String> getAlphabetsOL () {
+    public static ObservableList<String> getAlphabetsOLNames() {
         ObservableList<String> tempList = FXCollections.observableArrayList();
         for (Alphabet a : alphabetsOL) {
             tempList.add(a.getName());
         }
         return tempList;
+    }
+
+    public static ObservableList<String[]> getAlphabetsOLComponents () {
+        ObservableList<String[]> list = FXCollections.observableArrayList();
+        for (Alphabet a : alphabetsOL) {
+            list.add(a.getComponents());
+        }
+        return list;
+    }
+    public static ObservableList<Alphabet> getAlphabetsOL () {
+        return alphabetsOL;
     }
 
     public static void addAlphabet (Alphabet alphabet) {
