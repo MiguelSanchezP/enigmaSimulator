@@ -4,15 +4,15 @@
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tooltip?>
-
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
 <DialogPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml" fx:controller="com.miguelsanchez.newComponentsControllers.NewPlugboard">
     <content>
-        <GridPane vgap="15" hgap="15" fx:id="PlugConfigurationPane">
+        <GridPane vgap="15" hgap="15" prefWidth="300">
             <RadioButton text="Double direction wire" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true" fx:id="RBDoubleWire">
                 <tooltip>
                     <Tooltip text="Button Up: the wire goes from A to B and from B to A; Button Down: the wire only goes from A to B"/>
@@ -27,8 +27,9 @@
                 </tooltip>
             </RadioButton>
             <Label GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2" fx:id="LInformation"/>
-            <Label fx:id="LConfiguredLetters" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" wrapText="true"/>
-            <ProgressBar GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" progress="0.5" prefWidth="250"/>
+            <TextArea GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" fx:id="TAConfiguredLetters" editable="false" wrapText="true"/>
+            <Label text="Step 3 of 5 (40%)" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <ProgressBar GridPane.columnIndex="1" GridPane.rowIndex="6" progress="0.4"/>
         </GridPane>
     </content>
 </DialogPane>
