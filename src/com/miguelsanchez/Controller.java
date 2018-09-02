@@ -118,8 +118,6 @@ public class Controller {
                         newAlphabetCancel = false;
                         NewAlphabet alphabet = alphabetFxmlLoader.getController();
                         tempAlphabet = alphabet.getResults();
-
-                        Alphabet tempAlphabet2 = new Alphabet(tempAlphabet.getName(), tempAlphabet.getTempComponents(), tempAlphabet.getRegex());
                         if ((tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) || (tempAlphabet.isExistingAlphabet() && tempAlphabet.getExistingAlphabetName().equals("Select"))) {
                             newAlphabetCancel = true;
                             if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
@@ -135,24 +133,31 @@ public class Controller {
                                 alert.setContentText("Are you sure you want to continue?\nPlease select one in order to continue");
                                 alert.showAndWait();
                             }
-                            /*
-                            * Check the error caused here
-                            * only is active the first error, also in the configuration case */
-//                        } else if (Alphabet.getAlphabetsOLNames().contains(tempAlphabet.getName()) || !Alphabet.getAlphabetsOLComponents().contains(tempAlphabet.getComponents())) {
-//                            Alert alert = new Alert(Alert.AlertType.NONE);
-//                            alert.getButtonTypes().add(ButtonType.OK);
-//                            alert.setTitle("name already used");
-//                            alert.showAndWait();
-//                            newAlphabetCancel=true;
-                            /*MAKE THIS BY THE CONTENT OF THE ARRAY*/
-                        }else if (alphabetRepeated(tempAlphabet)) {
-                            Alert alert = new Alert(Alert.AlertType.NONE);
-                            alert.getButtonTypes().add(ButtonType.OK);
-                            alert.setTitle("THIS CONFIGURATION EXISTS ALREADY");
+
+//                            * Check the error caused here
+//                            * only is active the first error, also in the configuration case */
+                        } else if (Alphabet.getAlphabetsOLNames().contains(tempAlphabet.getName())) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Name Already Used");
+                            alert.setHeaderText("There is an alphabet with the same name");
+                            alert.setContentText("Press OK and change the name in order to continue");
                             alert.showAndWait();
                             newAlphabetCancel=true;
+                        }else if (alphabetRepeated(tempAlphabet)) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+//                            alert.getButtonTypes().add(ButtonType.OK);
+                            alert.getButtonTypes().add(ButtonType.CANCEL);
+                            alert.setTitle("Configuration Already Defined");
+                            alert.setHeaderText("There is an alphabet that has the same configuration");
+                            alert.setContentText("Do you want to use this alphabet? (Press OK to proceed\nor cancel to go back and make modifications)");
+                            Optional<ButtonType> result1 = alert.showAndWait();
+                            if (result1.isPresent() && result1.get().equals(ButtonType.OK)) {
+                                tempMachine.setAlphabet(getRepeatedAlphabet(tempAlphabet));
+                            }else{
+                                newAlphabetCancel = true;
+                            }
                         }else{
-//                            Alphabet.addAlphabet(tempAlphabet);
+                            Alphabet.addAlphabet(tempAlphabet);
                         }
                     } else {
                         if (cancelConfirmation()) {
@@ -307,5 +312,19 @@ public class Controller {
             }
         }
         return false;
+    }
+    private static Alphabet getRepeatedAlphabet (Alphabet a) {
+        ArrayList<String> components1 = new ArrayList<>();
+        Collections.addAll(components1, a.getComponents());
+        Collections.sort(components1);
+        for (Alphabet a1 : Alphabet.getAlphabetsOL()) {
+            ArrayList<String> componentsDef = new ArrayList<>();
+            Collections.addAll(componentsDef, a1.getComponents());
+            Collections.sort(componentsDef);
+            if (components1.equals(componentsDef)) {
+                return a1;
+            }
+        }
+        return null;
     }
 }
