@@ -2,11 +2,9 @@ package com.miguelsanchez;
 
 import com.miguelsanchez.components.Alphabet;
 import com.miguelsanchez.components.Machine;
-import com.miguelsanchez.components.Rotor;
 import com.miguelsanchez.newComponentsControllers.NewAlphabet;
 import com.miguelsanchez.newComponentsControllers.NewMachine;
-import com.miguelsanchez.newComponentsControllers.NewPlugboard;
-import com.miguelsanchez.newComponentsControllers.NewRotor;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -15,6 +13,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 public class Controller {
@@ -118,6 +118,8 @@ public class Controller {
                         newAlphabetCancel = false;
                         NewAlphabet alphabet = alphabetFxmlLoader.getController();
                         tempAlphabet = alphabet.getResults();
+
+                        Alphabet tempAlphabet2 = new Alphabet(tempAlphabet.getName(), tempAlphabet.getTempComponents(), tempAlphabet.getRegex());
                         if ((tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) || (tempAlphabet.isExistingAlphabet() && tempAlphabet.getExistingAlphabetName().equals("Select"))) {
                             newAlphabetCancel = true;
                             if (tempAlphabet.getName().isEmpty() || tempAlphabet.getTempComponents().isEmpty()) {
@@ -133,8 +135,24 @@ public class Controller {
                                 alert.setContentText("Are you sure you want to continue?\nPlease select one in order to continue");
                                 alert.showAndWait();
                             }
-                        } else {
-                            Alphabet.addAlphabet(tempAlphabet);
+                            /*
+                            * Check the error caused here
+                            * only is active the first error, also in the configuration case */
+//                        } else if (Alphabet.getAlphabetsOLNames().contains(tempAlphabet.getName()) || !Alphabet.getAlphabetsOLComponents().contains(tempAlphabet.getComponents())) {
+//                            Alert alert = new Alert(Alert.AlertType.NONE);
+//                            alert.getButtonTypes().add(ButtonType.OK);
+//                            alert.setTitle("name already used");
+//                            alert.showAndWait();
+//                            newAlphabetCancel=true;
+                            /*MAKE THIS BY THE CONTENT OF THE ARRAY*/
+                        }else if (alphabetRepeated(tempAlphabet)) {
+                            Alert alert = new Alert(Alert.AlertType.NONE);
+                            alert.getButtonTypes().add(ButtonType.OK);
+                            alert.setTitle("THIS CONFIGURATION EXISTS ALREADY");
+                            alert.showAndWait();
+                            newAlphabetCancel=true;
+                        }else{
+//                            Alphabet.addAlphabet(tempAlphabet);
                         }
                     } else {
                         if (cancelConfirmation()) {
@@ -274,5 +292,20 @@ public class Controller {
 
     public static String[] getAlphabetComponents () {
         return alphabetComponents;
+    }
+
+    private static boolean alphabetRepeated (Alphabet a) {
+        ArrayList<String> components1 = new ArrayList<>();
+        Collections.addAll(components1, a.getComponents());
+        Collections.sort(components1);
+        for (Alphabet a1 : Alphabet.getAlphabetsOL()) {
+            ArrayList<String> componentsDef = new ArrayList<>();
+            Collections.addAll(componentsDef, a1.getComponents());
+            Collections.sort(componentsDef);
+            if (components1.equals(componentsDef)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
