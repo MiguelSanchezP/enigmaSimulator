@@ -7,7 +7,7 @@ import javafx.scene.control.ComboBox;
 
 public class FillComboBox {
     public static void alphabetsFill (ComboBox<String> cb) {
-        cb.setItems(Alphabet.getAlphabetsOL());
+        cb.setItems(Alphabet.getAlphabetsOLNames());
     }
 
     public static void alphabetsContentFill (ComboBox<String> cb, String[] s) {
