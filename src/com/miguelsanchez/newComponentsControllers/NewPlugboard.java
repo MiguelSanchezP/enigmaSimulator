@@ -2,7 +2,6 @@ package com.miguelsanchez.newComponentsControllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,15 +13,15 @@ import static com.miguelsanchez.auxiliars.FillComboBox.alphabetsContentFill;
 public class NewPlugboard {
 
     @FXML
-    private GridPane PlugConfigurationPane;
-    @FXML
     private RadioButton RBConfigureLater, RBDoubleWire;
     @FXML
     private ComboBox<String> CBFirstCharacter, CBSecondCharacter;
-//    @FXML
-//    private Button BConfirmation;
     @FXML
-    private Label LInformation, LConfiguredLetters;
+    private Button BConfirmation;
+    @FXML
+    private Label LInformation;
+    @FXML
+    private TextArea TAConfiguredLetters;
 
     private HashMap<String, String> plugConfiguration = new HashMap<>();
     private ArrayList<String> letters = new ArrayList<>();
@@ -32,6 +31,7 @@ public class NewPlugboard {
         alphabetsContentFill(CBSecondCharacter, getAlphabetComponents());
         CBFirstCharacter.setPromptText("Select");
         CBSecondCharacter.setPromptText("Select");
+        TAConfiguredLetters.setText("Configured Letters:\n");
     }
 
 
@@ -39,9 +39,11 @@ public class NewPlugboard {
     private void handleRBConfigureLater() {
         if (RBConfigureLater.isSelected()) {
             RBDoubleWire.setDisable(true);
-        } else {
-            PlugConfigurationPane.getChildren().get(0).setDisable(false);
-            PlugConfigurationPane.getChildren().get(2).setDisable(false);
+            CBFirstCharacter.setDisable(true);
+            CBSecondCharacter.setDisable(true);
+            BConfirmation.setDisable(true);
+            LInformation.setDisable(true);
+            TAConfiguredLetters.setDisable(true);
         }
     }
 
@@ -62,7 +64,7 @@ public class NewPlugboard {
                 LInformation.setText("Value added successfully");
                 letters.add(cA);
                 letters.add(cB);
-                LConfiguredLetters.setText("Configured: " + toString(letters));
+                TAConfiguredLetters.setText("Configured Letters:\n" + toString(letters));
             }
         }
     }
