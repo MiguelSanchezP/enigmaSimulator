@@ -153,9 +153,16 @@ public class Controller {
                             Optional<ButtonType> result1 = alert.showAndWait();
                             if (result1.isPresent() && result1.get().equals(ButtonType.OK)) {
                                 tempMachine.setAlphabet(getRepeatedAlphabet(tempAlphabet));
-                            }else{
+                            } else {
                                 newAlphabetCancel = true;
                             }
+                        }else if (repeatedInside(tempAlphabet)) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Two Values Repeated");
+                            alert.setHeaderText("There are at least two values repeated");
+                            alert.setContentText("Press OK and change/delete one of those values in order to continue");
+                            alert.showAndWait();
+                            newAlphabetCancel=true;
                         }else{
                             Alphabet.addAlphabet(tempAlphabet);
                         }
@@ -191,7 +198,7 @@ public class Controller {
         //STARTING OF THE ROTORS
         LinkedList<Rotor> tempRotors = new LinkedList<>();
         int currentRotor = 0;
-
+Ç
         while (tempRotors.size() != tempMachine.getTotalRotors()) {
             Dialog<ButtonType> newRotorDialog = new Dialog<>();
             newRotorDialog.setTitle("Creation of a rotor");
@@ -326,5 +333,16 @@ public class Controller {
             }
         }
         return null;
+    }
+
+    private static boolean repeatedInside (Alphabet a) {
+        ArrayList<String> allvalues = new ArrayList<>();
+        for (String s : a.getComponents()) {
+            if (allvalues.contains(s)) {
+                return true;
+            }
+            allvalues.add(s);
+        }
+        return false;
     }
 }
