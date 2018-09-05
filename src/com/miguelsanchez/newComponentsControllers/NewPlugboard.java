@@ -22,6 +22,8 @@ public class NewPlugboard {
     private Label LInformation;
     @FXML
     private TextArea TAConfiguredLetters;
+    @FXML
+    private ToggleButton BForce;
 
     private HashMap<String, String> plugConfiguration = new HashMap<>();
     private ArrayList<String> letters = new ArrayList<>();
@@ -31,7 +33,7 @@ public class NewPlugboard {
         alphabetsContentFill(CBSecondCharacter, getAlphabetComponents());
         CBFirstCharacter.setPromptText("Select");
         CBSecondCharacter.setPromptText("Select");
-        TAConfiguredLetters.setText("Configured Letters:\n");
+        TAConfiguredLetters.setText("Configured characters (double wire):\n");
     }
 
 
@@ -53,7 +55,22 @@ public class NewPlugboard {
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
             if (plugConfiguration.containsKey(cA)) {
-                LInformation.setText("First letter already configured in the pair (" + plugConfiguration.get(cA) + "," + cA + ")");
+                if (BForce.isSelected()) {
+                    String prevVal = plugConfiguration.get(cA);
+                    plugConfiguration.remove(prevVal, cA);
+                    plugConfiguration.remove(cA, prevVal);
+                    plugConfiguration.put(cA, cB);
+                    plugConfiguration.put(cB, cA);
+                    letters.remove(prevVal);
+                    letters.remove(cA);
+                    letters.add(cA);
+                    letters.add(cB);
+                    TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
+                    LInformation.setText("Value changed successfully");
+                    BForce.setSelected(false);
+                }else {
+                    LInformation.setText("First letter already configured in the pair (" + plugConfiguration.get(cA) + "," + cA + ")");
+                }
             }else if (plugConfiguration.containsKey(cB)) {
                 LInformation.setText("Second letter already used in the pair (" + plugConfiguration.get(cB) + "," + cB + ")");
             }else if ((cA!=null) && cA.equals(cB) || (cB!=null) && cB.equals(cA)) {
@@ -64,8 +81,10 @@ public class NewPlugboard {
                 LInformation.setText("Value added successfully");
                 letters.add(cA);
                 letters.add(cB);
-                TAConfiguredLetters.setText("Configured Letters:\n" + toString(letters));
+                TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
             }
+        }else{
+
         }
     }
 
@@ -81,11 +100,17 @@ public class NewPlugboard {
     }
 
     private String toString (ArrayList<String> myList) {
-        Collections.sort(myList);
         StringBuilder sb = new StringBuilder();
         sb.setLength(0);
+        int value = 0;
         for (String s : myList) {
             sb.append(s);
+            value+=1;
+            if (value%2 == 0) {
+                sb.append(" / ");
+            }else{
+                sb.append("-");
+            }
         }
         return sb.toString();
     }
