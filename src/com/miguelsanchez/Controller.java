@@ -4,7 +4,6 @@ import com.miguelsanchez.components.Alphabet;
 import com.miguelsanchez.components.Machine;
 import com.miguelsanchez.newComponentsControllers.NewAlphabet;
 import com.miguelsanchez.newComponentsControllers.NewMachine;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -88,8 +87,8 @@ public class Controller {
         }
             //continue with the other menus in the following order:
             //on the new machine add the temporal names?
-            //0.- Alphabets
-            //1.-Plugboard
+            //0.- Alphabets done
+            //1.-Plugboard process
             //2.-Rotation Configuration
             //3.-Rotors (create the alert for non active rotors creating a variable for the temporal list)
             //4.-Reflectors
@@ -133,9 +132,6 @@ public class Controller {
                                 alert.setContentText("Are you sure you want to continue?\nPlease select one in order to continue");
                                 alert.showAndWait();
                             }
-
-//                            * Check the error caused here
-//                            * only is active the first error, also in the configuration case */
                         } else if (Alphabet.getAlphabetsOLNames().contains(tempAlphabet.getName())) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Name Already Used");
@@ -145,7 +141,6 @@ public class Controller {
                             newAlphabetCancel=true;
                         }else if (alphabetRepeated(tempAlphabet)) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
-//                            alert.getButtonTypes().add(ButtonType.OK);
                             alert.getButtonTypes().add(ButtonType.CANCEL);
                             alert.setTitle("Configuration Already Defined");
                             alert.setHeaderText("There is an alphabet that has the same configuration");
@@ -178,7 +173,6 @@ public class Controller {
                 alphabetComponents = tempMachine.getAlphabet().getComponents();
             }
 
-        //STARTING OF THE PLUGBOARD
         boolean plugCancel = true;
         while (plugCancel) {
             Dialog<ButtonType> plugboardDialog = new Dialog<>();
