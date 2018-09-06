@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 import static com.miguelsanchez.Controller.getAlphabetComponents;
@@ -56,22 +55,14 @@ public class NewPlugboard {
             String cB = CBSecondCharacter.getValue();
             if (plugConfiguration.containsKey(cA)) {
                 if (BForce.isSelected()) {
-                    String prevVal = plugConfiguration.get(cA);
-                    plugConfiguration.remove(prevVal, cA);
-                    plugConfiguration.remove(cA, prevVal);
-                    plugConfiguration.put(cA, cB);
-                    plugConfiguration.put(cB, cA);
-                    letters.remove(prevVal);
-                    letters.remove(cA);
-                    letters.add(cA);
-                    letters.add(cB);
-                    TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
-                    LInformation.setText("Value changed successfully");
-                    BForce.setSelected(false);
+                    forceValue(plugConfiguration.get(cA), cA, cB);
                 }else {
                     LInformation.setText("First letter already configured in the pair (" + plugConfiguration.get(cA) + "," + cA + ")");
                 }
             }else if (plugConfiguration.containsKey(cB)) {
+                if (BForce.isSelected()) {
+                    forceValue(plugConfiguration.get(cB), cB, cA);
+                }
                 LInformation.setText("Second letter already used in the pair (" + plugConfiguration.get(cB) + "," + cB + ")");
             }else if ((cA!=null) && cA.equals(cB) || (cB!=null) && cB.equals(cA)) {
                 LInformation.setText("Cannot set a wire to its same position");
@@ -114,4 +105,26 @@ public class NewPlugboard {
         }
         return sb.toString();
     }
+
+    private void forceValue (String prevVal, String constVar, String newVar) {
+        if (plugConfiguration.containsKey(newVar)) {
+            System.out.println("HELLO :)");
+        }
+        plugConfiguration.remove(prevVal, constVar);
+        plugConfiguration.remove(constVar, prevVal);
+        plugConfiguration.put(constVar, newVar);
+        plugConfiguration.put(newVar, constVar);
+        letters.remove(prevVal);
+        letters.remove(constVar);
+        letters.add(constVar);
+        letters.add(newVar);
+        TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
+        LInformation.setText("Value changed successfully");
+        BForce.setSelected(false);
+    }
+
+    //make a remove values method
+    //recursion if HELLO :)
+    //else finish with changed value
+    //if more than 3 steps to be removed make alert of changing many values
 }
