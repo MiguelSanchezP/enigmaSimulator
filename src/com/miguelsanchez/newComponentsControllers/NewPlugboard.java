@@ -74,8 +74,6 @@ public class NewPlugboard {
                 letters.add(cB);
                 TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
             }
-        }else{
-
         }
     }
 
