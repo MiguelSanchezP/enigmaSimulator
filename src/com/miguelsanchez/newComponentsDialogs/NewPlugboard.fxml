@@ -14,7 +14,7 @@
             xmlns:fx="http://javafx.com/fxml" fx:controller="com.miguelsanchez.newComponentsControllers.NewPlugboard">
     <content>
         <GridPane vgap="15" hgap="15" prefWidth="300">
-            <RadioButton text="Double direction wire" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true" fx:id="RBDoubleWire">
+            <RadioButton text="Double direction wire" GridPane.columnIndex="0" GridPane.rowIndex="0" selected="true" fx:id="RBDoubleWire" onAction="#handleRBDoubleWire">
                 <tooltip>
                     <Tooltip text="Button Up: the wire goes from A to B and from B to A; Button Down: the wire only goes from A to B"/>
                 </tooltip>
@@ -32,6 +32,7 @@
             <TextArea GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" fx:id="TAConfiguredLetters" editable="false" wrapText="true"/>
             <Label text="Step 3 of 5 (40%)" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
             <ProgressBar GridPane.columnIndex="1" GridPane.rowIndex="6" progress="0.4"/>
+            <!--add the clear button with alert-->
         </GridPane>
     </content>
 </DialogPane>
