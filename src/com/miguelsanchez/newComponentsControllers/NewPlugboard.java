@@ -181,12 +181,6 @@ public class NewPlugboard {
     }
 
     private void forceValueSimple (String a, String b) {
-//        if (plugConfigurationSimple.containsValue(b)) {
-//            int pos = lettersSimple.indexOf(b);
-//            lettersSimple.remove(b);
-//            lettersSimple.remove(pos+1);
-//            plugConfigurationSimple.remove(b, plugConfigurationSimple.get(b));
-//        }else
             if (plugConfigurationSimple.containsValue(b)) {
             System.out.println("Hello :)");
             int pos = lettersSimple.indexOf(b);
