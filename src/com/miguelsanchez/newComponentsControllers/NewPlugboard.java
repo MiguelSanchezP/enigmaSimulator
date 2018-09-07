@@ -106,7 +106,7 @@ public class NewPlugboard {
 
     private void forceValue (String prevVal, String constVar, String newVar) {
         if (plugConfiguration.containsKey(newVar)) {
-            System.out.println("HELLO :)");
+            remove (newVar, plugConfiguration.get(newVar));
         }
         plugConfiguration.remove(prevVal, constVar);
         plugConfiguration.remove(constVar, prevVal);
@@ -121,8 +121,10 @@ public class NewPlugboard {
         BForce.setSelected(false);
     }
 
-    //make a remove values method
-    //recursion if HELLO :)
-    //else finish with changed value
-    //if more than 3 steps to be removed make alert of changing many values
+    private void remove (String val1, String val2) {
+        plugConfiguration.remove(val1, val2);
+        plugConfiguration.remove(val2, val1);
+        letters.remove(val1);
+        letters.remove(val2);
+    }
 }
