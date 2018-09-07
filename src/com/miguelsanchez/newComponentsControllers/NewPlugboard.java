@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static com.miguelsanchez.Controller.getAlphabetComponents;
 import static com.miguelsanchez.auxiliars.FillComboBox.alphabetsContentFill;
@@ -24,8 +25,10 @@ public class NewPlugboard {
     @FXML
     private ToggleButton BForce;
 
-    private HashMap<String, String> plugConfiguration = new HashMap<>();
-    private ArrayList<String> letters = new ArrayList<>();
+    private HashMap<String, String> plugConfigurationDouble = new HashMap<>();
+    private ArrayList<String> lettersDouble = new ArrayList<>();
+    private HashMap<String, String> plugConfigurationSimple = new HashMap<>();
+    private ArrayList<String> lettersSimple = new ArrayList<>();
 
     public void initialize() {
         alphabetsContentFill(CBFirstCharacter, getAlphabetComponents());
@@ -50,41 +53,84 @@ public class NewPlugboard {
 
     @FXML
     private void handleBConfirmation() {
-        if (RBDoubleWire.isSelected()) {//finish the other cases
+        if (RBDoubleWire.isSelected()) {//finish the other cases --> in process
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
-            if (plugConfiguration.containsKey(cA)) {
+            if (plugConfigurationDouble.containsKey(cA)) {
                 if (BForce.isSelected()) {
-                    forceValue(plugConfiguration.get(cA), cA, cB);
+                    forceValue(plugConfigurationDouble.get(cA), cA, cB);
                 }else {
-                    LInformation.setText("First letter already configured in the pair (" + plugConfiguration.get(cA) + "," + cA + ")");
+                    LInformation.setText("First character configured in the pair (" + plugConfigurationDouble.get(cA) + "," + cA + ")");
                 }
-            }else if (plugConfiguration.containsKey(cB)) {
+            }else if (plugConfigurationDouble.containsKey(cB)) {
                 if (BForce.isSelected()) {
-                    forceValue(plugConfiguration.get(cB), cB, cA);
+                    forceValue(plugConfigurationDouble.get(cB), cB, cA);
                 }
-                LInformation.setText("Second letter already used in the pair (" + plugConfiguration.get(cB) + "," + cB + ")");
+                LInformation.setText("Second character configured in the pair (" + plugConfigurationDouble.get(cB) + "," + cB + ")");
             }else if ((cA!=null) && cA.equals(cB) || (cB!=null) && cB.equals(cA)) {
                 LInformation.setText("Cannot set a wire to its same position");
             } else {
-                plugConfiguration.put(cA, cB);
-                plugConfiguration.put(cB, cA);
+                plugConfigurationDouble.put(cA, cB);
+                plugConfigurationDouble.put(cB, cA);
                 LInformation.setText("Value added successfully");
-                letters.add(cA);
-                letters.add(cB);
-                TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
+                lettersDouble.add(cA);
+                lettersDouble.add(cB);
+                lettersDouble.add(cB);
+                lettersDouble.add(cA);
+                TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
+            }
+        }else{
+            String cA = CBFirstCharacter.getValue();
+            String cB = CBSecondCharacter.getValue();
+            if (plugConfigurationSimple.containsKey(cA)) {
+                if (BForce.isSelected()) {
+                    forceValueSimple(cA, cB);
+                }else{
+                    LInformation.setText("First character configured in the pair (" + plugConfigurationSimple.get(cA) + "," + cA + ")");
+                }
+            }else if (plugConfigurationSimple.containsKey(cB)) {
+                if (BForce.isSelected()) {
+                    forceValueSimple (cB, cA);
+                }else{
+                    LInformation.setText("Second character configured in the pair (" + plugConfigurationSimple.get(cB) + "," + cB + ")");
+                }
+            }else if ((cA!=null)&&(cA.equals(cB)) || (cB!=null) && (cB.equals(cA))) {
+                LInformation.setText("Cannot set a wire in its same position");
+            }else{
+                plugConfigurationSimple.put(cA, cB);
+                lettersSimple.add(cA);
+                lettersSimple.add(cB);
+                LInformation.setText("Value added successfully");
+                TAConfiguredLetters.setText("Configured characters (simple wire):\n" + toString(lettersSimple));
             }
         }
     }
 
     @FXML
+    private void handleRBDoubleWire () {
+        if (RBDoubleWire.isSelected()) {
+            TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
+        }else{
+            TAConfiguredLetters.setText("Configured characters (simple wire):\n" + toString(lettersSimple));
+        }
+    }
+    @FXML
     private void handleCBFirstCharacter() {
         String cA = CBFirstCharacter.getValue();
-        if (plugConfiguration.containsKey(cA)) {
-            CBSecondCharacter.setValue(plugConfiguration.get(cA));
-            LInformation.setText("Value already defined");
-        } else {
-            CBSecondCharacter.setValue(cA);
+        if (RBDoubleWire.isSelected()) {
+            if (plugConfigurationDouble.containsKey(cA)) {
+                CBSecondCharacter.setValue(plugConfigurationDouble.get(cA));
+                LInformation.setText("Value already defined");
+            } else {
+                CBSecondCharacter.setValue(cA);
+            }
+        }else{
+            if (plugConfigurationSimple.containsValue(cA)) {
+                CBSecondCharacter.setValue(plugConfigurationSimple.get(cA));
+                LInformation.setText("Value already defined");
+            }else{
+                CBSecondCharacter.setValue(cA);
+            }
         }
     }
 
@@ -105,26 +151,67 @@ public class NewPlugboard {
     }
 
     private void forceValue (String prevVal, String constVar, String newVar) {
-        if (plugConfiguration.containsKey(newVar)) {
-            remove (newVar, plugConfiguration.get(newVar));
+        if (plugConfigurationDouble.containsKey(newVar)) {
+            remove (newVar, plugConfigurationDouble.get(newVar));
         }
-        plugConfiguration.remove(prevVal, constVar);
-        plugConfiguration.remove(constVar, prevVal);
-        plugConfiguration.put(constVar, newVar);
-        plugConfiguration.put(newVar, constVar);
-        letters.remove(prevVal);
-        letters.remove(constVar);
-        letters.add(constVar);
-        letters.add(newVar);
-        TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(letters));
+        plugConfigurationDouble.remove(prevVal, constVar);
+        plugConfigurationDouble.remove(constVar, prevVal);
+        plugConfigurationDouble.put(constVar, newVar);
+        plugConfigurationDouble.put(newVar, constVar);
+        lettersDouble.remove(prevVal);
+        lettersDouble.remove(constVar);
+        lettersDouble.remove(constVar);
+        lettersDouble.remove(prevVal);
+        lettersDouble.add(constVar);
+        lettersDouble.add(newVar);
+        lettersDouble.add(newVar);
+        lettersDouble.add(constVar);
+        TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
         LInformation.setText("Value changed successfully");
         BForce.setSelected(false);
     }
 
     private void remove (String val1, String val2) {
-        plugConfiguration.remove(val1, val2);
-        plugConfiguration.remove(val2, val1);
-        letters.remove(val1);
-        letters.remove(val2);
+        plugConfigurationDouble.remove(val1, val2);
+        plugConfigurationDouble.remove(val2, val1);
+        lettersDouble.remove(val1);
+        lettersDouble.remove(val2);
+        lettersDouble.remove(val2);
+        lettersDouble.remove(val1);
+    }
+
+    private void forceValueSimple (String a, String b) {
+//        if (plugConfigurationSimple.containsValue(b)) {
+//            int pos = lettersSimple.indexOf(b);
+//            lettersSimple.remove(b);
+//            lettersSimple.remove(pos+1);
+//            plugConfigurationSimple.remove(b, plugConfigurationSimple.get(b));
+//        }else
+            if (plugConfigurationSimple.containsValue(b)) {
+            System.out.println("Hello :)");
+            int pos = lettersSimple.indexOf(b);
+            lettersSimple.remove(b);
+            lettersSimple.remove(pos-1);
+            plugConfigurationSimple.remove(getKeyFromValue(plugConfigurationSimple, b), b);
+        }
+        plugConfigurationSimple.remove(a, plugConfigurationSimple.get(a));
+        plugConfigurationSimple.put(a, b);
+        int pos = lettersSimple.indexOf(a);
+        lettersSimple.remove(pos+1);
+        lettersSimple.remove(a);
+        lettersSimple.add(a);
+        lettersSimple.add(b);
+        TAConfiguredLetters.setText("Configured characters (double wire): \n" + toString(lettersSimple));
+        LInformation.setText("Value changed successfully");
+        BForce.setSelected(false);
+    }
+
+    private String getKeyFromValue (HashMap<String, String> map, String value) {
+        for (Map.Entry<String, String> m : map.entrySet()) {
+            if (m.getValue().equals(value)) {
+                return m.getKey();
+            }
+        }
+        return null;
     }
 }
