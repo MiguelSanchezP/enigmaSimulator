@@ -25,7 +25,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void stop () throws Exception {
+    public void stop () {
         try {
             Alphabet.storeAlphabets();
         }catch (IOException e) {
@@ -34,7 +34,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void init () throws Exception {
+    public void init () {
         try {
             Alphabet.loadAlphabets(); // add the creation of the default alphabets
         }catch (IOException e) {
