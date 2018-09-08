@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.miguelsanchez.Controller.getAlphabetComponents;
 import static com.miguelsanchez.auxiliars.FillComboBox.alphabetsContentFill;
@@ -17,13 +18,13 @@ public class NewPlugboard {
     @FXML
     private ComboBox<String> CBFirstCharacter, CBSecondCharacter;
     @FXML
-    private Button BConfirmation;
+    private Button BConfirmation, BClear;
     @FXML
     private Label LInformation;
     @FXML
     private TextArea TAConfiguredLetters;
     @FXML
-    private ToggleButton BForce;
+    private ToggleButton TBForce;
 
     private HashMap<String, String> plugConfigurationDouble = new HashMap<>();
     private ArrayList<String> lettersDouble = new ArrayList<>();
@@ -48,6 +49,17 @@ public class NewPlugboard {
             BConfirmation.setDisable(true);
             LInformation.setDisable(true);
             TAConfiguredLetters.setDisable(true);
+            TBForce.setDisable(true);
+            BClear.setDisable(true);
+        }else{
+            RBDoubleWire.setDisable(false);
+            CBFirstCharacter.setDisable(false);
+            CBSecondCharacter.setDisable(false);
+            BConfirmation.setDisable(false);
+            LInformation.setDisable(false);
+            TAConfiguredLetters.setDisable(false);
+            TBForce.setDisable(false);
+            BClear.setDisable(false);
         }
     }
 
@@ -57,13 +69,13 @@ public class NewPlugboard {
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
             if (plugConfigurationDouble.containsKey(cA)) {
-                if (BForce.isSelected()) {
+                if (TBForce.isSelected()) {
                     forceValue(plugConfigurationDouble.get(cA), cA, cB);
                 }else {
                     LInformation.setText("First character configured in the pair (" + plugConfigurationDouble.get(cA) + "," + cA + ")");
                 }
             }else if (plugConfigurationDouble.containsKey(cB)) {
-                if (BForce.isSelected()) {
+                if (TBForce.isSelected()) {
                     forceValue(plugConfigurationDouble.get(cB), cB, cA);
                 }
                 LInformation.setText("Second character configured in the pair (" + plugConfigurationDouble.get(cB) + "," + cB + ")");
@@ -83,13 +95,13 @@ public class NewPlugboard {
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
             if (plugConfigurationSimple.containsKey(cA)) {
-                if (BForce.isSelected()) {
+                if (TBForce.isSelected()) {
                     forceValueSimple(cA, cB);
                 }else{
                     LInformation.setText("First character configured in the pair (" + plugConfigurationSimple.get(cA) + "," + cA + ")");
                 }
             }else if (plugConfigurationSimple.containsKey(cB)) {
-                if (BForce.isSelected()) {
+                if (TBForce.isSelected()) {
                     forceValueSimple (cB, cA);
                 }else{
                     LInformation.setText("Second character configured in the pair (" + plugConfigurationSimple.get(cB) + "," + cB + ")");
@@ -134,6 +146,29 @@ public class NewPlugboard {
         }
     }
 
+    @FXML
+    private void handleBClear () {
+        if (BClear.isArmed()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.getButtonTypes().add(ButtonType.CANCEL);
+            alert.setTitle("Clear configuration");
+            alert.setHeaderText("You are about to clear the configuration of the plugboard");
+            alert.setContentText("Press OK to clear, Cancel to go back");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get().equals(ButtonType.OK)) {
+                plugConfigurationDouble.clear();
+                plugConfigurationSimple.clear();
+                lettersDouble.clear();
+                lettersSimple.clear();
+                if (RBDoubleWire.isSelected()) {
+                    TAConfiguredLetters.setText("Configured characters (double wire): ");
+                }else{
+                    TAConfiguredLetters.setText("Configured characters (single wire): ");
+                }
+            }
+        }
+    }
+
     private String toString (ArrayList<String> myList) {
         StringBuilder sb = new StringBuilder();
         sb.setLength(0);
@@ -168,7 +203,7 @@ public class NewPlugboard {
         lettersDouble.add(constVar);
         TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
         LInformation.setText("Value changed successfully");
-        BForce.setSelected(false);
+        TBForce.setSelected(false);
     }
 
     private void remove (String val1, String val2) {
@@ -197,7 +232,7 @@ public class NewPlugboard {
         lettersSimple.add(b);
         TAConfiguredLetters.setText("Configured characters (double wire): \n" + toString(lettersSimple));
         LInformation.setText("Value changed successfully");
-        BForce.setSelected(false);
+        TBForce.setSelected(false);
     }
 
     private String getKeyFromValue (HashMap<String, String> map, String value) {
