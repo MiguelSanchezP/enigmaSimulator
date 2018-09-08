@@ -153,9 +153,10 @@ public class Controller {
                             }
                         }else if (repeatedInside(tempAlphabet)) {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setResizable(true);
                             alert.setTitle("Two Values Repeated");
                             alert.setHeaderText("There are at least two values repeated");
-                            alert.setContentText("Press OK and change/delete one of those values in order to continue");
+                            alert.setContentText("Change them in order to continue(" + getRepeatedVals(tempAlphabet) + ")");
                             alert.showAndWait();
                             newAlphabetCancel=true;
                         }else{
@@ -338,5 +339,18 @@ public class Controller {
             allvalues.add(s);
         }
         return false;
+    }
+
+    private String getRepeatedVals (Alphabet a) {
+        StringBuilder sb = new StringBuilder();
+        ArrayList<String> values = new ArrayList<>();
+        for (String s : a.getComponents()) {
+            if (values.contains(s)) {
+                sb.append(s);
+                sb.append(" ");
+            }
+            values.add(s);
+        }
+        return sb.toString();
     }
 }
