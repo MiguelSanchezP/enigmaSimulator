@@ -1,4 +1,5 @@
 Standard	A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-	-
-MyAlphabet	Q-W-E-R-T-Y-U-I-O-P-A-S-D-F-G-H-J-K-L-Z-X-C-V-B-N-M-	-
-Alphabeticus	A/Z/B/Y/C/X/D/W/E/V/F/U/G/T/H/S/I/R/J/Q/K/P/L/O/M/N/	/
-PunctuationAlphabet	A&B&C&D&E&F&G&H&I&J&K&L&M&N&O&P&Q&R&S&T&U&V&W&X&Y&Z&.&-&,&;&:&_&*&+&(&)&$&€&@&"&!&¡&?&¿&=&%&#&·&|&/&º&ª&}&{&	&
+PunctuationAlphabet	AsepBsepCsepDsepEsepFsepGsepHsepIsepJsepKsepLsepMsepNsepOsepPsepQsepRsepSsepTsepUsepVsepWsepXsepYsepZsep,sep.sep-sep;sep:sep_sep{sep}sep[sep]sep1sep2sep3sep4sep5sep6sep7sep8sep9sep0sepºsepªsep\sep!sep|sep"sep@sep·sep#sep$sep~sep%sep½sep&sep¬sep/sep(sep)sep=sep+sep*sep'sep¡sep?sep¿sep<sep>sepŁsep€sep¶sepŦsep←sep↓sep→sepØsepÞsepÆsepßsepÐsepŊsepĦsepĿsepÑsep«sep»sep¢sep“sepÇsep	sep
+NumericalAlph	A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-Y-Z-1-2-3-4-5-6-7-8-9-0-	-
+CatalanFullAlph	A-B-C-Ç-D-E-F-G-H-I-J-K-L-LL-M-N-Ñ-O-P-Q-R-S-T-U-V-W-Y-Z-1-2-3-4-5-6-7-8-9-0-	-
+MathsAlph	1sep2sep3sep4sep5sep6sep7sep8sep9sep0sep+sep-sep*sep/sep.sep!sep%sep(sep)sepxsepysepzsep·sep=sep	sep
