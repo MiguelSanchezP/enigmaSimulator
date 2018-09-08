@@ -36,7 +36,7 @@ public class Main extends Application {
     @Override
     public void init () throws Exception {
         try {
-            Alphabet.loadAlphabets();
+            Alphabet.loadAlphabets(); // add the creation of the default alphabets
         }catch (IOException e) {
             e.printStackTrace();
         }
