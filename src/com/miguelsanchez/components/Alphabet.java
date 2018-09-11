@@ -28,6 +28,7 @@ public class Alphabet {
         this.components = components.split(regex);
         this.regex = regex;
     }
+
     private Alphabet (String name) {
         this.name = name;
     }
@@ -167,6 +168,5 @@ public class Alphabet {
         }finally{
             br.close();
         }
-
     }
 }
