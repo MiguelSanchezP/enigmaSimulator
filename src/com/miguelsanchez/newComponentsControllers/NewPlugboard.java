@@ -1,5 +1,7 @@
 package com.miguelsanchez.newComponentsControllers;
+/*ADD the maximum letters available*/
 
+import com.miguelsanchez.components.PlugBoard;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -39,6 +41,19 @@ public class NewPlugboard {
         TAConfiguredLetters.setText("Configured characters (double wire):\n");
     }
 
+    public void setPlugboard (PlugBoard pb) {
+        RBConfigureLater.setSelected (pb.isConfigureLater());
+        RBDoubleWire.setSelected(pb.isDouble());
+        plugConfigurationSimple = pb.getConfiguredLettersSimple();
+        plugConfigurationDouble = pb.getConfiguredLettersDouble();
+        lettersSimple = pb.getLettersSimple();
+        lettersDouble = pb.getLettersDouble();
+        if (RBDoubleWire.isSelected()) {
+            TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
+        }else{
+            TAConfiguredLetters.setText("Configured characters (single wire):\n" + toString(lettersSimple));
+        }
+    }
 
     @FXML
     private void handleRBConfigureLater() {
