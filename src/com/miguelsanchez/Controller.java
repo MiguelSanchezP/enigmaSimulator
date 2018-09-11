@@ -2,8 +2,10 @@ package com.miguelsanchez;
 
 import com.miguelsanchez.components.Alphabet;
 import com.miguelsanchez.components.Machine;
+import com.miguelsanchez.components.PlugBoard;
 import com.miguelsanchez.newComponentsControllers.NewAlphabet;
 import com.miguelsanchez.newComponentsControllers.NewMachine;
+import com.miguelsanchez.newComponentsControllers.NewPlugboard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
@@ -175,6 +177,7 @@ public class Controller {
             }
 
         boolean plugCancel = true;
+        PlugBoard tempPlugBoard = new PlugBoard();
         while (plugCancel) {
             Dialog<ButtonType> plugboardDialog = new Dialog<>();
             plugboardDialog.setTitle ("EMS: Create a new Plugboard");
@@ -183,11 +186,16 @@ public class Controller {
             plugboardFxmlLoader.setLocation(getClass().getResource("./newComponentsDialogs/NewPlugboard.fxml"));
             try {
                 plugboardDialog.getDialogPane().setContent(plugboardFxmlLoader.load());
+                NewPlugboard plugBoard = plugboardFxmlLoader.getController();
+                plugBoard.setPlugboard(tempPlugBoard);
             }catch (IOException e) {
                 e.printStackTrace();
             }
             plugboardDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
             Optional<ButtonType> result = plugboardDialog.showAndWait();
+            if (result.isPresent() && result.get().equals(ButtonType.OK)) {
+                //continue with the development of everything
+            }
         }
 /*
         //STARTING OF THE ROTORS
