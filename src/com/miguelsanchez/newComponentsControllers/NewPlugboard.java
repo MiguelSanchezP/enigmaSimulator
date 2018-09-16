@@ -50,7 +50,7 @@ public class NewPlugboard {
         lettersDouble = pb.getLettersDouble();
         if (RBDoubleWire.isSelected()) {
             TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
-        }else{
+        }else if (!RBConfigureLater.isSelected()){
             TAConfiguredLetters.setText("Configured characters (single wire):\n" + toString(lettersSimple));
         }
     }
@@ -188,13 +188,15 @@ public class NewPlugboard {
         StringBuilder sb = new StringBuilder();
         sb.setLength(0);
         int value = 0;
-        for (String s : myList) {
-            sb.append(s);
-            value+=1;
-            if (value%2 == 0) {
-                sb.append(" / ");
-            }else{
-                sb.append("-");
+        if (myList != null) {
+            for (String s : myList) {
+                sb.append(s);
+                value += 1;
+                if (value % 2 == 0) {
+                    sb.append(" / ");
+                } else {
+                    sb.append("-");
+                }
             }
         }
         return sb.toString();
