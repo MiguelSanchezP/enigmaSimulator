@@ -14,10 +14,6 @@ public class PlugBoard {
     private String[] usedAlphabetComponents;
 
     public PlugBoard () {
-        lettersSimple.clear();
-        lettersDouble.clear();
-        configuredLettersSimple.clear();
-        configuredLettersDouble.clear();
         isConfigureLater = false;
         isDouble = false;
         usedAlphabetComponents = Controller.getAlphabetComponents();
