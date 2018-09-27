@@ -80,7 +80,7 @@ public class NewPlugboard {
 
     @FXML
     private void handleBConfirmation() {
-        if (RBDoubleWire.isSelected()) {//finish the other cases --> in process
+        if (RBDoubleWire.isSelected()) {//finish the other cases --> in theory done
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
             if (plugConfigurationDouble.containsKey(cA)) {
@@ -144,6 +144,7 @@ public class NewPlugboard {
     @FXML
     private void handleCBFirstCharacter() {
         String cA = CBFirstCharacter.getValue();
+        if (cA != null) {
         if (RBDoubleWire.isSelected()) {
             if (plugConfigurationDouble.containsKey(cA)) {
                 CBSecondCharacter.setValue(plugConfigurationDouble.get(cA));
@@ -153,14 +154,49 @@ public class NewPlugboard {
             }
         }else{
             if (plugConfigurationSimple.containsValue(cA)) {
-                CBSecondCharacter.setValue(plugConfigurationSimple.get(cA));
-                LInformation.setText("Value already defined");
+                    CBSecondCharacter.setValue(plugConfigurationSimple.get(cA));
+                    LInformation.setText("Value already defined");
+                } else {
+                    CBSecondCharacter.setValue(cA);
+                }
+            }
+        }else{
+            System.out.println("there was a null pointer");
+        }
+    }
+/*
+    private HashMap <String, String> plugConfigurationDouble = new HashMap <>();
+    private HashMap <String, String> plugConfigurationSimple = new HashMap <>();
+
+    @FXML
+    private ComboBox CBFirstCharacter, CBSecondCharacter;
+    @FXML
+    private Label LInformation;
+    @FXML
+    private RadioButton RBDoubleWire;
+
+    @FXML
+    private void handleCBFirstCharacter() {
+        String cA = CBFirstCharacter.getValue();
+        if (cA != null) {
+            if (RBDoubleWire.isSelected()) {
+                if (plugConfigurationDouble.containsKey(cA)) {
+                    CBSecondCharacter.setValue(plugConfigurationDouble.get(cA));
+                    LInformation.setText("Value already defined");
+                } else {
+                    CBSecondCharacter.setValue(cA);
+                }
             }else{
-                CBSecondCharacter.setValue(cA);
+                if (plugConfigurationSimple.containsValue(cA)) {
+                    CBSecondCharacter.setValue(plugConfigurationSimple.get(cA));
+                    LInformation.setText("Value already defined");
+                } else {
+                    CBSecondCharacter.setValue(cA);
+                }
             }
         }
     }
-
+*/
     @FXML
     private void handleBClear () {
         if (BClear.isArmed()) {
