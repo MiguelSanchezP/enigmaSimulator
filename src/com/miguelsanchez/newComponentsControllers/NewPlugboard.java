@@ -144,6 +144,7 @@ public class NewPlugboard {
     @FXML
     private void handleCBFirstCharacter() {
         String cA = CBFirstCharacter.getValue();
+        System.out.println(cA);
         if (cA != null) {
         if (RBDoubleWire.isSelected()) {
             if (plugConfigurationDouble.containsKey(cA)) {
