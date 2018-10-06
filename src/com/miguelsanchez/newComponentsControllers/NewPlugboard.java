@@ -141,63 +141,33 @@ public class NewPlugboard {
             TAConfiguredLetters.setText("Configured characters (simple wire):\n" + toString(lettersSimple));
         }
     }
-    @FXML
-    private void handleCBFirstCharacter() {
-        String cA = CBFirstCharacter.getValue();
-        System.out.println(cA);
-        if (cA != null) {
-        if (RBDoubleWire.isSelected()) {
-            if (plugConfigurationDouble.containsKey(cA)) {
-                CBSecondCharacter.setValue(plugConfigurationDouble.get(cA));
-                LInformation.setText("Value already defined");
-            } else {
-                CBSecondCharacter.setValue(cA);
-            }
-        }else{
-            if (plugConfigurationSimple.containsValue(cA)) {
-                    CBSecondCharacter.setValue(plugConfigurationSimple.get(cA));
-                    LInformation.setText("Value already defined");
-                } else {
-                    CBSecondCharacter.setValue(cA);
-                }
-            }
-        }else{
-            System.out.println("there was a null pointer");
-        }
-    }
-/*
-    private HashMap <String, String> plugConfigurationDouble = new HashMap <>();
-    private HashMap <String, String> plugConfigurationSimple = new HashMap <>();
-
-    @FXML
-    private ComboBox CBFirstCharacter, CBSecondCharacter;
-    @FXML
-    private Label LInformation;
-    @FXML
-    private RadioButton RBDoubleWire;
 
     @FXML
     private void handleCBFirstCharacter() {
-        String cA = CBFirstCharacter.getValue();
-        if (cA != null) {
+        String cAA = CBFirstCharacter.getValue();
+        if (cAA != null) {
             if (RBDoubleWire.isSelected()) {
-                if (plugConfigurationDouble.containsKey(cA)) {
-                    CBSecondCharacter.setValue(plugConfigurationDouble.get(cA));
-                    LInformation.setText("Value already defined");
+                if (plugConfigurationDouble != null) {
+                    if (plugConfigurationDouble.containsKey(cAA)) {
+                        CBSecondCharacter.setValue(plugConfigurationDouble.get(cAA));
+                        LInformation.setText("Value already defined");
+                    }
                 } else {
-                    CBSecondCharacter.setValue(cA);
+                    CBSecondCharacter.setValue(cAA);
                 }
-            }else{
-                if (plugConfigurationSimple.containsValue(cA)) {
-                    CBSecondCharacter.setValue(plugConfigurationSimple.get(cA));
-                    LInformation.setText("Value already defined");
+            } else {
+                if (plugConfigurationSimple != null) {
+                    if (plugConfigurationSimple.containsValue(cAA)) {
+                        CBSecondCharacter.setValue(plugConfigurationSimple.get(cAA));
+                        LInformation.setText("Value already defined");
+                    }
                 } else {
-                    CBSecondCharacter.setValue(cA);
+                    CBSecondCharacter.setValue(cAA);
                 }
             }
         }
     }
-*/
+
     @FXML
     private void handleBClear () {
         if (BClear.isArmed()) {
