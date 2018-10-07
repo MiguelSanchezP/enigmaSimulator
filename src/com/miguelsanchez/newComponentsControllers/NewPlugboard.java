@@ -83,52 +83,56 @@ public class NewPlugboard {
         if (RBDoubleWire.isSelected()) {//finish the other cases --> in theory done
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
-            if (plugConfigurationDouble.containsKey(cA)) {
-                if (TBForce.isSelected()) {
-                    forceValue(plugConfigurationDouble.get(cA), cA, cB);
-                }else {
-                    LInformation.setText("First character configured in the pair (" + plugConfigurationDouble.get(cA) + "," + cA + ")");
+            if (plugConfigurationDouble != null) {
+                if (plugConfigurationDouble.containsKey(cA)) {
+                    if (TBForce.isSelected()) {
+                        forceValue(plugConfigurationDouble.get(cA), cA, cB);
+                    } else {
+                        LInformation.setText("First character configured in the pair (" + plugConfigurationDouble.get(cA) + "," + cA + ")");
+                    }
+                } else if (plugConfigurationDouble.containsKey(cB)) {
+                    if (TBForce.isSelected()) {
+                        forceValue(plugConfigurationDouble.get(cB), cB, cA);
+                    }
+                    LInformation.setText("Second character configured in the pair (" + plugConfigurationDouble.get(cB) + "," + cB + ")");
+                } else if ((cA != null) && cA.equals(cB) || (cB != null) && cB.equals(cA)) {
+                    LInformation.setText("Cannot set a wire to its same position");
+                } else {
+                    plugConfigurationDouble.put(cA, cB);
+                    plugConfigurationDouble.put(cB, cA);
+                    LInformation.setText("Value added successfully");
+                    lettersDouble.add(cA);
+                    lettersDouble.add(cB);
+                    lettersDouble.add(cB);
+                    lettersDouble.add(cA);
+                    TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
                 }
-            }else if (plugConfigurationDouble.containsKey(cB)) {
-                if (TBForce.isSelected()) {
-                    forceValue(plugConfigurationDouble.get(cB), cB, cA);
-                }
-                LInformation.setText("Second character configured in the pair (" + plugConfigurationDouble.get(cB) + "," + cB + ")");
-            }else if ((cA!=null) && cA.equals(cB) || (cB!=null) && cB.equals(cA)) {
-                LInformation.setText("Cannot set a wire to its same position");
-            } else {
-                plugConfigurationDouble.put(cA, cB);
-                plugConfigurationDouble.put(cB, cA);
-                LInformation.setText("Value added successfully");
-                lettersDouble.add(cA);
-                lettersDouble.add(cB);
-                lettersDouble.add(cB);
-                lettersDouble.add(cA);
-                TAConfiguredLetters.setText("Configured characters (double wire):\n" + toString(lettersDouble));
             }
-        }else{
+        }else {
             String cA = CBFirstCharacter.getValue();
             String cB = CBSecondCharacter.getValue();
-            if (plugConfigurationSimple.containsKey(cA)) {
-                if (TBForce.isSelected()) {
-                    forceValueSimple(cA, cB);
-                }else{
-                    LInformation.setText("First character configured in the pair (" + plugConfigurationSimple.get(cA) + "," + cA + ")");
+            if (plugConfigurationSimple != null) {
+                if (plugConfigurationSimple.containsKey(cA)) {
+                    if (TBForce.isSelected()) {
+                        forceValueSimple(cA, cB);
+                    } else {
+                        LInformation.setText("First character configured in the pair (" + plugConfigurationSimple.get(cA) + "," + cA + ")");
+                    }
+                } else if (plugConfigurationSimple.containsKey(cB)) {
+                    if (TBForce.isSelected()) {
+                        forceValueSimple(cB, cA);
+                    } else {
+                        LInformation.setText("Second character configured in the pair (" + plugConfigurationSimple.get(cB) + "," + cB + ")");
+                    }
+                } else if ((cA != null) && (cA.equals(cB)) || (cB != null) && (cB.equals(cA))) {
+                    LInformation.setText("Cannot set a wire in its same position");
+                } else {
+                    plugConfigurationSimple.put(cA, cB);
+                    lettersSimple.add(cA);
+                    lettersSimple.add(cB);
+                    LInformation.setText("Value added successfully");
+                    TAConfiguredLetters.setText("Configured characters (simple wire):\n" + toString(lettersSimple));
                 }
-            }else if (plugConfigurationSimple.containsKey(cB)) {
-                if (TBForce.isSelected()) {
-                    forceValueSimple (cB, cA);
-                }else{
-                    LInformation.setText("Second character configured in the pair (" + plugConfigurationSimple.get(cB) + "," + cB + ")");
-                }
-            }else if ((cA!=null)&&(cA.equals(cB)) || (cB!=null) && (cB.equals(cA))) {
-                LInformation.setText("Cannot set a wire in its same position");
-            }else{
-                plugConfigurationSimple.put(cA, cB);
-                lettersSimple.add(cA);
-                lettersSimple.add(cB);
-                LInformation.setText("Value added successfully");
-                TAConfiguredLetters.setText("Configured characters (simple wire):\n" + toString(lettersSimple));
             }
         }
     }
